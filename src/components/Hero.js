@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Download, Mail } from 'lucide-react';
+import profileImg from '../assets/profile.jpg';
 
 const Hero = () => {
   const scrollToAbout = () => {
@@ -20,7 +21,6 @@ const Hero = () => {
             </g>
           </svg>
         </div>
-        
         {/* Floating Elements */}
         <motion.div
           animate={{ y: [0, -20, 0] }}
@@ -40,12 +40,28 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-custom text-center px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 container-custom px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center max-w-5xl mx-auto text-center md:text-left">
+        {/* Profile Picture Left */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="flex-shrink-0 mb-8 md:mb-0 md:mr-12 flex justify-center"
+        >
+          <img
+            src={profileImg}
+            alt="Nirmal Koswatta profile"
+            className="w-36 h-36 sm:w-44 sm:h-44 rounded-full object-cover border-4 border-primary-500 shadow-lg dark:border-primary-700 bg-white dark:bg-dark-800"
+            style={{ boxShadow: '0 4px 24px rgba(14, 165, 233, 0.15)' }}
+          />
+        </motion.div>
+
+        {/* Greeting and Content Right */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-2xl mx-auto"
         >
           {/* Greeting */}
           <motion.h1
@@ -73,7 +89,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto md:mx-0 leading-relaxed"
           >
             Passionate about creating innovative solutions and building the future through code. 
             Currently pursuing Computer Science at SLIIT CityUNI with a focus on modern web technologies.
@@ -84,7 +100,7 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="mb-12 p-6 glass-effect rounded-2xl max-w-3xl mx-auto"
+            className="mb-12 p-6 glass-effect rounded-2xl max-w-3xl mx-auto md:mx-0"
           >
             <p className="text-lg text-gray-300 italic">
               "I stopped chasing people, and started building my future."
@@ -96,7 +112,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center"
           >
             <motion.button
               whileHover={{ scale: 1.05 }}

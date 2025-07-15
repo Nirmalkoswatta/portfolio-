@@ -124,14 +124,16 @@ const Hero = () => {
               Get In Touch
             </motion.button>
 
-            <motion.button
+            <motion.a
+              href="/CV.pdf"
+              download
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-2 px-8 py-4 border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300"
             >
               <Download className="w-5 h-5" />
               Download CV
-            </motion.button>
+            </motion.a>
           </motion.div>
         </motion.div>
 

@@ -14,11 +14,13 @@ const Skills = () => {
       skills: [
         { name: 'HTML', level: 90, color: 'from-orange-500 to-orange-600' },
         { name: 'CSS', level: 85, color: 'from-blue-500 to-blue-600' },
+        { name: 'SCSS', level: 80, color: 'from-pink-500 to-pink-600' },
         { name: 'JavaScript', level: 88, color: 'from-yellow-500 to-yellow-600' },
-        { name: 'React', level: 85, color: 'from-cyan-500 to-cyan-600' },
+        { name: 'React', level: 95, color: 'from-cyan-500 to-cyan-600' },
         { name: 'Angular', level: 80, color: 'from-red-500 to-red-600' },
         { name: 'TailwindCSS', level: 90, color: 'from-teal-500 to-teal-600' },
         { name: 'Redux', level: 75, color: 'from-purple-500 to-purple-600' },
+        { name: 'Android Studio', level: 70, color: 'from-green-500 to-green-600' },
       ]
     },
     {
@@ -27,7 +29,8 @@ const Skills = () => {
         { name: 'Java (Spring Boot)', level: 85, color: 'from-red-600 to-red-700' },
         { name: 'Node.js', level: 80, color: 'from-green-500 to-green-600' },
         { name: 'Firebase', level: 75, color: 'from-orange-400 to-orange-500' },
-        { name: 'PHP', level: 70, color: 'from-purple-500 to-purple-600' },
+        { name: 'PHP', level: 80, color: 'from-indigo-500 to-indigo-600' },
+        { name: 'Laravel', level: 75, color: 'from-red-500 to-red-600' },
         { name: 'MySQL', level: 80, color: 'from-blue-600 to-blue-700' },
         { name: 'MongoDB', level: 75, color: 'from-green-600 to-green-700' },
       ]

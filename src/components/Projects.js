@@ -11,42 +11,42 @@ const Projects = () => {
 
   const projects = [
     {
-      title: 'Pet Clinic Record System',
-      description: 'A comprehensive management system for pet clinics with patient records, appointments, and medical history tracking.',
-      technologies: ['React', 'MongoDB', 'Firebase Auth', 'Node.js'],
-      features: ['User Authentication', 'Patient Records', 'Appointment Scheduling', 'Medical History'],
-      image: '🐾',
-      github: 'https://github.com/Nirmalkoswatta/pet-clinic-system',
+      title: 'Record Management System',
+      description: 'A record management system using React, Redux, and Firebase for real-time data and authentication.',
+      technologies: ['React', 'Redux', 'Firebase'],
+      features: ['User Authentication', 'Record CRUD', 'Real-time Sync', 'Role-based Access'],
+      image: '📋',
+      github: 'https://github.com/Nirmalkoswatta/Record-management-',
       live: '#',
       category: 'Full Stack'
     },
     {
       title: 'Feedback & Notification System',
-      description: 'Modern feedback collection system with real-time notifications and smooth user interface.',
-      technologies: ['EmailJS', 'TailwindCSS', 'JavaScript', 'HTML/CSS'],
+      description: 'Feedback collection and notification system using React, EmailJS, and TailwindCSS. Smooth UI and email notifications.',
+      technologies: ['React', 'EmailJS', 'TailwindCSS'],
       features: ['Email Notifications', 'Responsive Design', 'Smooth Animations', 'User Feedback'],
       image: '📧',
-      github: 'https://github.com/Nirmalkoswatta/feedback-system',
+      github: 'https://github.com/Nirmalkoswatta/Feedback-Notification',
       live: '#',
       category: 'Frontend'
     },
     {
-      title: 'Service Booking App',
-      description: 'Complete service booking platform with user management and appointment scheduling.',
-      technologies: ['Angular', 'Spring Boot', 'MySQL', 'REST APIs'],
+      title: 'Service Booking System Application',
+      description: 'A service booking platform using Angular, Spring Boot, and SCSS. Includes user dashboard and admin panel.',
+      technologies: ['Angular', 'Spring Boot', 'SCSS'],
       features: ['Service Booking', 'User Dashboard', 'Admin Panel', 'Payment Integration'],
       image: '📅',
-      github: 'https://github.com/Nirmalkoswatta/service-booking-app',
+      github: 'https://github.com/Nirmalkoswatta/Employe-Management-Systemm',
       live: '#',
       category: 'Full Stack'
     },
     {
-      title: 'E-commerce System',
-      description: 'Full-featured e-commerce platform with shopping cart, user authentication, and payment processing.',
-      technologies: ['HTML', 'PHP', 'JavaScript', 'MySQL'],
-      features: ['Shopping Cart', 'User Authentication', 'Payment Processing', 'Admin Dashboard'],
-      image: '🛒',
-      github: 'https://github.com/Nirmalkoswatta/ecommerce-system',
+      title: 'Fruit App (CRUD)',
+      description: 'A CRUD fruit app using Laravel, PHP, SQL, and Tailwind CSS. Manage fruit inventory and sales.',
+      technologies: ['Laravel', 'PHP', 'SQL', 'TailwindCSS'],
+      features: ['CRUD Operations', 'Inventory Management', 'Responsive UI'],
+      image: '🍉',
+      github: 'https://github.com/Nirmalkoswatta/FRUIT-APP-LARAVEL-',
       live: '#',
       category: 'Full Stack'
     }

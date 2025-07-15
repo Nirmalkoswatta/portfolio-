@@ -24,7 +24,7 @@ const Timeline = () => {
       ]
     },
     {
-      year: '2022 - 2023',
+      year: '2023 - Present',
       title: 'Full Stack Development',
       subtitle: 'Personal Projects & Learning',
       description: 'Developed multiple full-stack applications using React, Angular, Spring Boot, and various databases.',
@@ -37,7 +37,7 @@ const Timeline = () => {
       ]
     },
     {
-      year: '2021 - 2022',
+      year: '2023 - Present',
       title: 'Frontend Development',
       subtitle: 'Web Technologies',
       description: 'Started learning modern frontend frameworks and technologies including React, Angular, and TailwindCSS.',

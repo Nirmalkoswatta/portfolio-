@@ -125,7 +125,7 @@ const Footer = () => {
           <div className="flex items-center space-x-6 text-sm text-gray-400">
             <span>Built with React & Tailwind CSS</span>
             <span>•</span>
-            <span>Deployed on Vercel</span>
+            <span>Deployed on Netlify</span>
           </div>
 
           {/* Back to Top Button */}

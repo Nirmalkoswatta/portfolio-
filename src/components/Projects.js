@@ -17,7 +17,7 @@ const Projects = () => {
       features: ['User Authentication', 'Record CRUD', 'Real-time Sync', 'Role-based Access'],
       image: '📋',
       github: 'https://github.com/Nirmalkoswatta/Record-management-',
-      live: '#',
+      live: 'https://record-management-c97e4.web.app',
       category: 'Full Stack'
     },
     {

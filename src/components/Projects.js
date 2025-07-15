@@ -171,17 +171,6 @@ const Projects = () => {
                   </motion.a>
                 </div>
               </div>
-
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-2 bg-white text-gray-900 font-medium rounded-lg"
-                >
-                  View Details
-                </motion.button>
-              </div>
             </motion.div>
           ))}
         </div>

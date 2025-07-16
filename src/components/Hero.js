@@ -125,7 +125,7 @@ const Hero = () => {
             </motion.button>
 
             <motion.a
-              href="/CV.pdf"
+              href="/NIRMAL KOSWATTA CV.pdf"
               download
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

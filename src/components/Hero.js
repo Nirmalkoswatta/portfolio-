@@ -48,11 +48,19 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="flex-shrink-0 mb-8 md:mb-0 md:mr-12 flex justify-center"
         >
+          {/* Animated Profile Frame */}
+          <motion.div
+            initial={{ rotate: 0 }}
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}
+            className="absolute w-40 h-40 sm:w-48 sm:h-48 rounded-full border-4 border-primary-400 border-dashed shadow-xl pointer-events-none"
+            style={{ zIndex: 1 }}
+          />
           <img
             src={profileImg}
             alt="Nirmal Koswatta profile"
-            className="w-36 h-36 sm:w-44 sm:h-44 rounded-full object-cover border-4 border-primary-500 shadow-lg dark:border-primary-700 bg-white dark:bg-dark-800"
-            style={{ boxShadow: '0 4px 24px rgba(14, 165, 233, 0.15)' }}
+            className="w-36 h-36 sm:w-44 sm:h-44 rounded-full object-cover border-4 border-primary-500 shadow-lg dark:border-primary-700 bg-white dark:bg-dark-800 relative"
+            style={{ boxShadow: '0 4px 24px rgba(14, 165, 233, 0.15)', zIndex: 2 }}
           />
         </motion.div>
 
@@ -125,11 +133,11 @@ const Hero = () => {
             </motion.button>
 
             <motion.a
-              href="/DevOps CV.pdf"
+              href="/Nirmal Koswatta CV.pdf"
               download
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-8 py-4 border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300"
+              className="flex items-center gap-2 px-8 py-4 border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-300 ml-0 sm:ml-6"
             >
               <Download className="w-5 h-5" />
               Download CV

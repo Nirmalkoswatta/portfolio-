@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Download, Mail } from 'lucide-react';
-import profileImg from '../assets/profile.jpg';
+import profileImg from '../assets/profile1.jpg';
 
 const Hero = () => {
   const scrollToAbout = () => {

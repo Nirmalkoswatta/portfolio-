@@ -12,15 +12,15 @@ const Skills = () => {
     {
       title: 'Frontend Development',
       skills: [
-        { name: 'HTML', level: 90, color: 'from-orange-500 to-orange-600' },
-        { name: 'CSS', level: 85, color: 'from-blue-500 to-blue-600' },
-        { name: 'SCSS', level: 80, color: 'from-pink-500 to-pink-600' },
-        { name: 'JavaScript', level: 88, color: 'from-yellow-500 to-yellow-600' },
         { name: 'React', level: 95, color: 'from-cyan-500 to-cyan-600' },
+        { name: 'JavaScript', level: 88, color: 'from-yellow-500 to-yellow-600' },
+        { name: 'Redux', level: 75, color: 'from-purple-500 to-purple-600' },
+        { name: 'SCSS', level: 80, color: 'from-pink-500 to-pink-600' },
+        { name: 'CSS', level: 85, color: 'from-blue-500 to-blue-600' },
+        { name: 'HTML', level: 90, color: 'from-orange-500 to-orange-600' },
+        { name: 'Android Studio', level: 70, color: 'from-green-500 to-green-600' },
         { name: 'Angular', level: 80, color: 'from-red-500 to-red-600' },
         { name: 'TailwindCSS', level: 90, color: 'from-teal-500 to-teal-600' },
-        { name: 'Redux', level: 75, color: 'from-purple-500 to-purple-600' },
-        { name: 'Android Studio', level: 70, color: 'from-green-500 to-green-600' },
       ]
     },
     {
@@ -79,7 +79,7 @@ const Skills = () => {
                 {category.title}
               </h3>
               
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-1 gap-6">
                 {category.skills.map((skill, skillIndex) => (
                   <motion.div
                     key={skill.name}

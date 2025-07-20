@@ -11,6 +11,16 @@ const Projects = () => {
 
   const projects = [
     {
+      title: 'Fruit App (React + Firebase)',
+      description: 'A modern fruit management app built with React, Firebase, and SCSS. Features smooth animations, authentication, and real-time data. Deployed on Firebase.',
+      technologies: ['React', 'Firebase', 'SCSS'],
+      features: ['Authentication', 'CRUD Operations', 'Real-time Sync', 'Modern Animations', 'Deployed on Firebase'],
+      image: '🍏',
+      github: 'https://github.com/Nirmalkoswatta/fruitapp-react-firebase',
+      live: 'https://getfruitapp-kosa.web.app/login',
+      category: 'Full Stack'
+    },
+    {
       title: 'Record Management System',
       description: 'A record management system using React, Redux, and Firebase for real-time data and authentication.',
       technologies: ['React', 'Redux', 'Firebase'],

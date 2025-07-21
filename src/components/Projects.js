@@ -1,7 +1,11 @@
-import React from 'react';
+import VanillaTilt from 'vanilla-tilt';
+import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { ExternalLink, Github, Code, Database, Globe } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -85,6 +89,45 @@ const Projects = () => {
     }
   };
 
+  const cardRefs = useRef([]);
+  useEffect(() => {
+    // VanillaTilt
+    cardRefs.current.forEach((ref) => {
+      if (ref) VanillaTilt.init(ref, {
+        max: 15,
+        speed: 400,
+        glare: true,
+        'max-glare': 0.18,
+        scale: 1.04,
+      });
+    });
+    // GSAP ScrollTrigger
+    cardRefs.current.forEach((ref, i) => {
+      if (ref) {
+        gsap.fromTo(ref, {
+          opacity: 0,
+          y: 60,
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: i * 0.15,
+          scrollTrigger: {
+            trigger: ref,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+      }
+    });
+    return () => {
+      cardRefs.current.forEach((ref) => {
+        if (ref && ref.vanillaTilt) ref.vanillaTilt.destroy();
+      });
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+
   return (
     <section id="projects" className="section-padding bg-gray-50 dark:bg-dark-800">
       <div className="container-custom">
@@ -107,10 +150,11 @@ const Projects = () => {
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
+              ref={el => cardRefs.current[index] = el}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="group relative bg-white dark:bg-dark-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 card-hover"
+              className="group relative bg-white/10 dark:bg-dark-800/40 backdrop-blur-lg border border-white/20 dark:border-dark-700 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 card-hover"
             >
               {/* Project Image/Icon */}
               <div className="h-48 bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">

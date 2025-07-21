@@ -1,5 +1,4 @@
-import anime from 'animejs';
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Download, Mail } from 'lucide-react';
 import profileImg from '../assets/profile1.jpg';

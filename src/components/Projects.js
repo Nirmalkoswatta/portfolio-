@@ -1,10 +1,10 @@
 import VanillaTilt from 'vanilla-tilt';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { ExternalLink, Github, Code, Database, Globe } from 'lucide-react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const Projects = () => {
@@ -90,6 +90,12 @@ const Projects = () => {
   };
 
   const cardRefs = useRef([]);
+
+  // Helper to set refs without causing render warnings
+  const setCardRef = useCallback((el, index) => {
+    cardRefs.current[index] = el;
+  }, []);
+
   useEffect(() => {
     // VanillaTilt
     cardRefs.current.forEach((ref) => {
@@ -150,7 +156,7 @@ const Projects = () => {
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              ref={el => cardRefs.current[index] = el}
+              ref={el => setCardRef(el, index)}
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}

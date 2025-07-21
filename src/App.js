@@ -53,7 +53,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-900 transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-dark-900 transition-colors duration-300 animated-gradient-bg">
       <Navbar darkMode={darkMode} toggleTheme={toggleTheme} />
       
       <AnimatePresence mode="wait">

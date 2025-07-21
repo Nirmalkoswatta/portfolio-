@@ -54,4 +54,22 @@
   .text-shadow-lg {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
+  
+  .animated-gradient-bg {
+    background: linear-gradient(120deg, #6a82fb, #0ea5e9, #a1c4fd, #43e97b, #38f9d7, #667eea, #764ba2);
+    background-size: 200% 200%;
+    animation: gradientMove 16s ease-in-out infinite;
+  }
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 } 

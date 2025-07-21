@@ -11,6 +11,16 @@ const Projects = () => {
 
   const projects = [
     {
+      title: 'Student Management System',
+      description: 'A modern student management app built with Angular, SCSS, and Firebase. Features real-time backend, authentication, and smooth UI. Deployed on Firebase.',
+      technologies: ['Angular', 'SCSS', 'Firebase'],
+      features: ['Authentication', 'Student CRUD', 'Real-time Backend', 'Modern Animations', 'Deployed on Firebase'],
+      image: '🎓',
+      github: 'https://github.com/Nirmalkoswatta/student-management-system',
+      live: 'https://record-management-system-e4074.web.app/login',
+      category: 'Full Stack'
+    },
+    {
       title: 'Fruit App (React + Firebase)',
       description: 'A modern fruit management app built with React, Firebase, and SCSS. Features smooth animations, authentication, and real-time data. Deployed on Firebase.',
       technologies: ['React', 'Firebase', 'SCSS'],

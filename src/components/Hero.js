@@ -1,4 +1,4 @@
-import anime from 'animejs';
+import * as anime from 'animejs';
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Download, Mail } from 'lucide-react';

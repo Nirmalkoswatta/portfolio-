@@ -1,6 +1,6 @@
 import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,7 +10,6 @@ import Projects from './components/Projects';
 import Timeline from './components/Timeline';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Lottie from 'lottie-react';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -70,21 +69,11 @@ function App() {
   };
 
   if (isLoading) {
-    let lottieData = null;
-    try {
-      lottieData = require('./assets/lottie-dev.json');
-    } catch (e) {
-      lottieData = null;
-    }
     return (
       <div className="min-h-screen bg-dark-900 flex items-center justify-center">
         <div className="text-center">
           <div className="w-32 h-32 mx-auto mb-4">
-            {lottieData ? (
-              <Lottie animationData={lottieData} loop={true} />
-            ) : (
-              <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            )}
+            <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           </div>
           <h2 className="text-xl font-semibold text-white">Loading Portfolio...</h2>
         </div>

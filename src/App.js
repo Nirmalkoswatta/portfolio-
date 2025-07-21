@@ -10,8 +10,6 @@ import Projects from './components/Projects';
 import Timeline from './components/Timeline';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import Lottie from 'lottie-react';
 
 function App() {
@@ -34,7 +32,6 @@ function App() {
     
     // Simulate loading
     setTimeout(() => setIsLoading(false), 1000);
-    AOS.init({ duration: 900, once: true, offset: 60 });
   }, [darkMode]);
 
   const toggleTheme = () => {
@@ -113,13 +110,13 @@ function App() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <div data-aos="fade-up"><Hero /></div>
-          <div data-aos="fade-up" data-aos-delay="100"><About /></div>
-          <div data-aos="fade-up" data-aos-delay="200"><Skills /></div>
-          <div data-aos="fade-up" data-aos-delay="300"><Projects /></div>
-          <div data-aos="fade-up" data-aos-delay="400"><Timeline /></div>
-          <div data-aos="fade-up" data-aos-delay="500"><Contact /></div>
-          <div data-aos="fade-up" data-aos-delay="600"><Footer /></div>
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Timeline />
+          <Contact />
+          <Footer />
         </motion.div>
       </AnimatePresence>
     </div>

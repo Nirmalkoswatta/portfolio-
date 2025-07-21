@@ -126,8 +126,10 @@ const Projects = () => {
         });
       }
     });
+    // Copy refs for cleanup
+    const refsForCleanup = cardRefs.current.slice();
     return () => {
-      cardRefs.current.forEach((ref) => {
+      refsForCleanup.forEach((ref) => {
         if (ref && ref.vanillaTilt) ref.vanillaTilt.destroy();
       });
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());

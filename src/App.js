@@ -73,11 +73,21 @@ function App() {
   };
 
   if (isLoading) {
+    let lottieData = null;
+    try {
+      lottieData = require('./assets/lottie-dev.json');
+    } catch (e) {
+      lottieData = null;
+    }
     return (
       <div className="min-h-screen bg-dark-900 flex items-center justify-center">
         <div className="text-center">
           <div className="w-32 h-32 mx-auto mb-4">
-            <Lottie animationData={require('./assets/lottie-dev.json')} loop={true} />
+            {lottieData ? (
+              <Lottie animationData={lottieData} loop={true} />
+            ) : (
+              <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            )}
           </div>
           <h2 className="text-xl font-semibold text-white">Loading Portfolio...</h2>
         </div>

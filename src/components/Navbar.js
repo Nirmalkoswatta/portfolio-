@@ -21,6 +21,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Certificates', href: '#certificates' },
     { name: 'Timeline', href: '#timeline' },
     { name: 'Contact', href: '#contact' },
   ];

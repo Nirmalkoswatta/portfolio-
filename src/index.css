@@ -25,18 +25,6 @@
     @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
   }
   
-  .nav-link {
-    @apply relative px-3 py-2 text-sm font-medium transition-colors duration-200 hover:text-primary-500;
-  }
-  
-  .nav-link::after {
-    @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-300;
-  }
-  
-  .nav-link:hover::after {
-    @apply w-full;
-  }
-  
   .section-padding {
     @apply py-16 px-4 sm:px-6 lg:px-8;
   }
@@ -60,6 +48,19 @@
     background-size: 200% 200%;
     animation: gradientMove 16s ease-in-out infinite;
   }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
 }
 
 @keyframes gradientMove {
@@ -71,5 +72,23 @@
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
   }
 } 

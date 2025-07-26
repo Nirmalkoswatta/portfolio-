@@ -28,7 +28,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-dark-900 text-white">
+    <footer className="bg-gray-100 dark:bg-dark-900 text-gray-800 dark:text-white">
       <div className="container-custom px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-3 gap-8 items-center">
           {/* Logo and Description */}
@@ -42,9 +42,9 @@ const Footer = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">NK</span>
               </div>
-              <span className="text-xl font-bold gradient-text">Nirmal Koswatta</span>
+              <span className="text-xl font-bold text-gray-800 dark:text-white">Nirmal Koswatta</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
               Software Engineering student passionate about creating innovative solutions 
               and building the future through code.
             </p>
@@ -57,7 +57,7 @@ const Footer = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-center"
           >
-            <h3 className="font-semibold mb-4">Quick Links</h3>
+            <h3 className="font-semibold mb-4 text-gray-800 dark:text-white">Quick Links</h3>
             <div className="space-y-2">
               {[
                 { name: 'About', href: '#about' },
@@ -68,7 +68,7 @@ const Footer = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="block text-gray-400 hover:text-primary-400 transition-colors text-sm"
+                  className="block text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors text-sm"
                 >
                   {link.name}
                 </a>
@@ -83,7 +83,7 @@ const Footer = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-center md:text-right"
           >
-            <h3 className="font-semibold mb-4">Connect</h3>
+            <h3 className="font-semibold mb-4 text-gray-800 dark:text-white">Connect</h3>
             <div className="flex justify-center md:justify-end space-x-4">
               {socialLinks.map((social) => (
                 <motion.a
@@ -93,10 +93,10 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-3 bg-dark-800 hover:bg-primary-600 rounded-lg transition-all duration-300 group"
+                  className="p-3 bg-gray-200 dark:bg-dark-800 hover:bg-primary-500 dark:hover:bg-primary-600 rounded-lg transition-all duration-300 group"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+                  <social.icon className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-white transition-colors" />
                 </motion.a>
               ))}
             </div>
@@ -108,7 +108,7 @@ const Footer = () => {
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="border-t border-dark-700 my-8"
+          className="border-t border-gray-300 dark:border-dark-700 my-8"
         />
 
         {/* Bottom Section */}
@@ -118,11 +118,11 @@ const Footer = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
         >
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
             © {currentYear} Nirmal Koswatta. All rights reserved.
           </p>
           
-          <div className="flex items-center space-x-6 text-sm text-gray-400">
+          <div className="flex items-center space-x-6 text-sm text-gray-600 dark:text-gray-400">
             <span>Built with React & Tailwind CSS</span>
             <span>•</span>
             <span>Deployed on Netlify</span>

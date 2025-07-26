@@ -54,7 +54,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
             <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">NK</span>
             </div>
-            <span className="text-xl font-bold gradient-text">Nirmal Koswatta</span>
+            <span className="text-xl font-bold text-gray-800 dark:text-white">Nirmal Koswatta</span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -63,7 +63,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="nav-link"
+                className="relative px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:text-primary-500 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
               >
                 {item.name}
               </button>
@@ -79,7 +79,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-colors"
+              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-colors text-gray-600 dark:text-gray-300"
             >
               <Github className="w-5 h-5" />
             </motion.a>
@@ -90,7 +90,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-colors"
+              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-colors text-gray-600 dark:text-gray-300"
             >
               <Linkedin className="w-5 h-5" />
             </motion.a>
@@ -100,7 +100,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
               onClick={toggleTheme}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-colors"
+              className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 transition-colors text-gray-600 dark:text-gray-300"
             >
               {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </motion.button>
@@ -109,7 +109,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-dark-800"
+            className="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-dark-800 text-gray-600 dark:text-gray-300"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -129,7 +129,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-800 transition-colors"
                   >
                     {item.name}
                   </button>
@@ -141,7 +141,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                       href="https://github.com/Nirmalkoswatta"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800"
+                      className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 text-gray-600 dark:text-gray-300"
                     >
                       <Github className="w-5 h-5" />
                     </a>
@@ -149,7 +149,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                       href="https://www.linkedin.com/in/nirmal-koswatta/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800"
+                      className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 text-gray-600 dark:text-gray-300"
                     >
                       <Linkedin className="w-5 h-5" />
                     </a>
@@ -157,7 +157,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                   
                   <button
                     onClick={toggleTheme}
-                    className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800"
+                    className="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 text-gray-600 dark:text-gray-300"
                   >
                     {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                   </button>

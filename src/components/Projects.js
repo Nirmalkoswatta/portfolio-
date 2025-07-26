@@ -1,11 +1,7 @@
-import VanillaTilt from 'vanilla-tilt';
-import React, { useRef, useEffect, useCallback } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ExternalLink, Github, Code, Database, Globe } from 'lucide-react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+import { ExternalLink, Github, Code, Database, Globe, Star } from 'lucide-react';
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -65,6 +61,26 @@ const Projects = () => {
       category: 'Full Stack'
     },
     {
+      title: 'Patient Management System',
+      description: 'A comprehensive healthcare management system built with Django and Python. Features patient records, appointment scheduling, and medical history tracking.',
+      technologies: ['Django', 'Python', 'SQLite', 'HTML/CSS'],
+      features: ['Patient Records', 'Appointment Management', 'Medical History', 'Admin Dashboard'],
+      image: '🏥',
+      github: 'https://github.com/Nirmalkoswatta/patient-management-system',
+      live: '#',
+      category: 'Full Stack'
+    },
+    {
+      title: 'Snake Game (Python)',
+      description: 'Classic Snake game implementation using Python and Pygame. Features score tracking, collision detection, and smooth gameplay mechanics.',
+      technologies: ['Python', 'Pygame'],
+      features: ['Score System', 'Collision Detection', 'Smooth Controls', 'Game Over Logic'],
+      image: '🐍',
+      github: 'https://github.com/Nirmalkoswatta/snakegame-phython',
+      live: '#',
+      category: 'Game Development'
+    },
+    {
       title: 'Fruit App (CRUD)',
       description: 'A CRUD fruit app using Laravel, PHP, SQL, and Tailwind CSS. Manage fruit inventory and sales.',
       technologies: ['Laravel', 'PHP', 'SQL', 'TailwindCSS'],
@@ -84,57 +100,12 @@ const Projects = () => {
         return <Globe className="w-4 h-4" />;
       case 'Backend':
         return <Database className="w-4 h-4" />;
+      case 'Game Development':
+        return <Star className="w-4 h-4" />;
       default:
         return <Code className="w-4 h-4" />;
     }
   };
-
-  const cardRefs = useRef([]);
-
-  // Helper to set refs without causing render warnings
-  const setCardRef = useCallback((el, index) => {
-    cardRefs.current[index] = el;
-  }, []);
-
-  useEffect(() => {
-    // VanillaTilt
-    cardRefs.current.forEach((ref) => {
-      if (ref) VanillaTilt.init(ref, {
-        max: 15,
-        speed: 400,
-        glare: true,
-        'max-glare': 0.18,
-        scale: 1.04,
-      });
-    });
-    // GSAP ScrollTrigger
-    cardRefs.current.forEach((ref, i) => {
-      if (ref) {
-        gsap.fromTo(ref, {
-          opacity: 0,
-          y: 60,
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: i * 0.15,
-          scrollTrigger: {
-            trigger: ref,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        });
-      }
-    });
-    // Copy refs for cleanup
-    const refsForCleanup = cardRefs.current.slice();
-    return () => {
-      refsForCleanup.forEach((ref) => {
-        if (ref && ref.vanillaTilt) ref.vanillaTilt.destroy();
-      });
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
 
   return (
     <section id="projects" className="section-padding bg-gray-50 dark:bg-dark-800">
@@ -154,19 +125,20 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              ref={el => setCardRef(el, index)}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="group relative bg-white/10 dark:bg-dark-800/40 backdrop-blur-lg border border-white/20 dark:border-dark-700 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 card-hover"
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -8 }}
+              className="group bg-white dark:bg-dark-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-dark-700"
             >
               {/* Project Image/Icon */}
-              <div className="h-48 bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+              <div className="h-48 bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center relative overflow-hidden">
                 <span className="text-6xl">{project.image}</span>
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
               {/* Project Content */}
@@ -174,18 +146,18 @@ const Projects = () => {
                 {/* Category Badge */}
                 <div className="flex items-center gap-2 mb-3">
                   {getCategoryIcon(project.category)}
-                  <span className="text-xs font-medium text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-900/30 px-2 py-1 rounded-full">
+                  <span className="text-xs font-medium text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-900/30 px-3 py-1 rounded-full">
                     {project.category}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">
+                <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
                   {project.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed line-clamp-3">
                   {project.description}
                 </p>
 
@@ -194,7 +166,7 @@ const Projects = () => {
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-dark-700 px-2 py-1 rounded"
+                      className="text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-dark-700 px-3 py-1 rounded-full"
                     >
                       {tech}
                     </span>
@@ -207,9 +179,9 @@ const Projects = () => {
                     Key Features:
                   </h4>
                   <ul className="space-y-1">
-                    {project.features.map((feature) => (
-                      <li key={feature} className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-2">
-                        <div className="w-1 h-1 bg-primary-500 rounded-full"></div>
+                    {project.features.slice(0, 3).map((feature) => (
+                      <li key={feature} className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-primary-500 rounded-full flex-shrink-0"></div>
                         {feature}
                       </li>
                     ))}
@@ -218,29 +190,32 @@ const Projects = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
-                  <motion.a
+                  <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors duration-200 shadow-md"
                   >
                     <Github className="w-4 h-4" />
                     Code
-                  </motion.a>
+                  </a>
                   
-                  <motion.a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 px-4 py-2 border border-primary-500 text-primary-500 text-sm font-medium rounded-lg hover:bg-primary-500 hover:text-white transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Live Demo
-                  </motion.a>
+                  {project.live !== '#' ? (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-primary-500 text-primary-500 text-sm font-medium rounded-lg hover:bg-primary-500 hover:text-white transition-all duration-200"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Live Demo
+                    </a>
+                  ) : (
+                    <div className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-gray-300 text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed">
+                      <ExternalLink className="w-4 h-4" />
+                      Coming Soon
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -251,23 +226,21 @@ const Projects = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="text-center mt-16"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mt-12"
         >
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Interested in seeing more of my work?
           </p>
-          <motion.a
+          <a
             href="https://github.com/Nirmalkoswatta"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-primary-500 to-primary-700 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-primary-500 to-primary-700 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
           >
             <Github className="w-5 h-5" />
             View All Projects on GitHub
-          </motion.a>
+          </a>
         </motion.div>
       </div>
     </section>

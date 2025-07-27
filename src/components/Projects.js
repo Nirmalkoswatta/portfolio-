@@ -61,6 +61,26 @@ const Projects = () => {
       category: 'Full Stack'
     },
     {
+      title: 'Pharmacy Inventory Management System',
+      description: 'Enterprise-grade pharmacy inventory system with React frontend, Node.js GraphQL backend, MongoDB database, and complete DevOps pipeline with Docker and Kubernetes.',
+      technologies: ['React', 'Node.js', 'GraphQL', 'MongoDB', 'Docker', 'Kubernetes'],
+      features: ['Medicine Management', 'Real-time Stock Tracking', 'Supplier Management', 'Order Management', 'DevOps Pipeline'],
+      image: '💊',
+      github: 'https://github.com/Nirmalkoswatta/pharmacy-inventory',
+      live: '#',
+      category: 'Full Stack'
+    },
+    {
+      title: 'Pharmacy Inventory Management System',
+      description: '💊 This is a modern Pharmacy Inventory Management System built with React, Node.js (GraphQL), and MongoDB, following full DevOps practices. It supports complete medicine, supplier, and order management with real-time stock tracking and low-stock alerts. The UI is fully responsive with animations, dark/light themes, and Material-UI components. Security is handled via JWT auth, environment variables, input validation, and CORS policies. It’s Docker-ready, with production deployment via Kubernetes and CI/CD using GitHub Actions. Built with ❤️ for smart, scalable, and secure pharmacy operations.',
+      technologies: ['React', 'Node.js', 'GraphQL', 'MongoDB', 'Docker', 'Kubernetes', 'Material-UI', 'JWT', 'CI/CD'],
+      features: ['Medicine, Supplier & Order Management', 'Real-time Stock & Alerts', 'Responsive UI with Animations', 'JWT Auth & Security', 'Docker & Kubernetes Deployment'],
+      image: '💊',
+      github: 'https://github.com/Nirmalkoswatta/pharmacy-inventory',
+      live: '#',
+      category: 'Full Stack'
+    },
+    {
       title: 'Patient Management System',
       description: 'A comprehensive healthcare management system built with Django and Python. Features patient records, appointment scheduling, and medical history tracking.',
       technologies: ['Django', 'Python', 'SQLite', 'HTML/CSS'],

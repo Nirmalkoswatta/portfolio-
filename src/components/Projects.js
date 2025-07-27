@@ -41,6 +41,16 @@ const Projects = () => {
       category: 'Full Stack'
     },
     {
+      title: 'Todo App',
+      description: 'A simple and responsive To-Do List app built with React and TypeScript. It allows users to add, complete, delete, and filter tasks. All tasks are stored in localStorage to persist across sessions. This project demonstrates clean code structure, component-based architecture, and strong type safety using TypeScript.',
+      technologies: ['React', 'TypeScript', 'localStorage', 'CSS'],
+      features: ['Add & Delete Tasks', 'Mark Complete/Incomplete', 'Filter Tasks', 'Persistent Storage', 'Responsive Design'],
+      image: '✅',
+      github: 'https://github.com/Nirmalkoswatta/Todo-app',
+      live: 'https://nirmalkoswatta.github.io/Todo-app/',
+      category: 'Frontend'
+    },
+    {
       title: 'Feedback & Notification System',
       description: 'Feedback collection and notification system using React, EmailJS, and TailwindCSS. Smooth UI and email notifications.',
       technologies: ['React', 'EmailJS', 'TailwindCSS'],

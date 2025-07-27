@@ -105,6 +105,62 @@ const Skills = () => {
       description: 'Styling and layout for modern web applications'
     },
     { 
+      name: 'TypeScript', 
+      color: 'from-blue-600 to-blue-800', 
+      icon: Code,
+      category: 'Frontend',
+      description: 'Strongly typed JavaScript for large-scale applications'
+    },
+    { 
+      name: 'GraphQL', 
+      color: 'from-pink-500 to-purple-600', 
+      icon: Database,
+      category: 'Backend',
+      description: 'Query language for APIs and runtime for executing queries'
+    },
+    { 
+      name: 'MongoDB', 
+      color: 'from-green-600 to-green-800', 
+      icon: Database,
+      category: 'Database',
+      description: 'NoSQL document database for modern applications'
+    },
+    { 
+      name: 'Material-UI', 
+      color: 'from-blue-500 to-indigo-600', 
+      icon: Palette,
+      category: 'Frontend',
+      description: 'React components implementing Google\'s Material Design'
+    },
+    { 
+      name: 'Django', 
+      color: 'from-green-700 to-green-900', 
+      icon: Code,
+      category: 'Backend',
+      description: 'High-level Python web framework for rapid development'
+    },
+    { 
+      name: 'Python', 
+      color: 'from-blue-500 to-yellow-500', 
+      icon: Code,
+      category: 'Backend',
+      description: 'Versatile programming language for web and software development'
+    },
+    { 
+      name: 'JWT', 
+      color: 'from-orange-500 to-red-600', 
+      icon: Settings,
+      category: 'Backend',
+      description: 'JSON Web Tokens for secure authentication and authorization'
+    },
+    { 
+      name: 'EmailJS', 
+      color: 'from-yellow-500 to-orange-500', 
+      icon: Globe,
+      category: 'Frontend',
+      description: 'Send emails directly from client-side JavaScript'
+    },
+    { 
       name: 'SCSS', 
       color: 'from-pink-500 to-pink-700', 
       icon: Palette,

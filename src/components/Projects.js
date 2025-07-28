@@ -41,6 +41,16 @@ const Projects = () => {
       category: 'Full Stack'
     },
     {
+      title: 'Currency Converter',
+      description: 'A real-time currency converter application built with vanilla JavaScript and ExchangeRate API. Convert between multiple currencies with live exchange rates and responsive design.',
+      technologies: ['JavaScript', 'ExchangeRate API', 'HTML', 'CSS'],
+      features: ['Real-time Exchange Rates', 'Multiple Currency Support', 'Responsive Design', 'Live API Integration'],
+      image: '💱',
+      github: 'https://github.com/Nirmalkoswatta/-Currency-Converter',
+      live: 'https://nirmalkoswatta.github.io/-Currency-Converter/',
+      category: 'Frontend'
+    },
+    {
       title: 'Todo App',
       description: 'A simple and responsive To-Do List app built with React and TypeScript. It allows users to add, complete, delete, and filter tasks. All tasks are stored in localStorage to persist across sessions. This project demonstrates clean code structure, component-based architecture, and strong type safety using TypeScript.',
       technologies: ['React', 'TypeScript', 'localStorage', 'CSS'],

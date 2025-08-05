@@ -41,6 +41,16 @@ const Projects = () => {
       category: 'Full Stack'
     },
     {
+      title: 'CI/CD Monitoring Dashboard',
+      description: 'A comprehensive monitoring dashboard built with React for tracking build and deployment status. Features real-time integration with GitHub Actions and automated Slack alerts for failed builds, positioning expertise in pipeline automation and monitoring.',
+      technologies: ['React', 'GitHub Actions', 'Slack API', 'CI/CD', 'Netlify'],
+      features: ['Real-time Build Status', 'GitHub Actions Integration', 'Slack Notifications', 'Pipeline Monitoring', 'Automated Alerts'],
+      image: '📊',
+      github: 'https://github.com/Nirmalkoswatta/Monitoring-Dashboard',
+      live: 'https://ci-cd-monitoring-dashboard.netlify.app/',
+      category: 'Full Stack'
+    },
+    {
       title: 'Currency Converter',
       description: 'A real-time currency converter application built with vanilla JavaScript and ExchangeRate API. Convert between multiple currencies with live exchange rates and responsive design.',
       technologies: ['JavaScript', 'ExchangeRate API', 'HTML', 'CSS'],

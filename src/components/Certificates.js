@@ -11,6 +11,40 @@ const Certificates = () => {
 
   const certificates = [
     {
+      title: 'Application Security in DevSecOps',
+      issuer: 'LinkedIn Learning',
+      date: 'August 2025',
+      description: 'Advanced course covering application security practices in DevSecOps environments, including security integration in CI/CD pipelines and secure development practices.',
+      icon: Shield,
+      type: 'Professional Certificate',
+      downloadUrl: '/CertificateOfCompletion_Application Security in DevSecOps.pdf',
+      verifyUrl: 'https://www.linkedin.com/learning/certificates/6ccf8db251f89d38b4de2f203fd192fbf334f62ef9a54864e64e25fb8080ba0c',
+      skills: ['Application Security', 'DevSecOps', 'CI/CD Security', 'Secure Development'],
+      color: 'from-red-500 via-orange-500 to-yellow-600',
+      bgPattern: 'bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/10 dark:to-orange-900/10',
+      iconBg: 'bg-gradient-to-r from-red-500 to-orange-600',
+      credentialId: 'LI-DEVSEC-2025-001',
+      level: 'Advanced',
+      hours: '25+'
+    },
+    {
+      title: 'Introduction to IoT and Digital Transformation',
+      issuer: 'Cisco Networking Academy',
+      date: 'August 2025',
+      description: 'Comprehensive introduction to Internet of Things (IoT) concepts and digital transformation strategies in modern business environments.',
+      icon: Zap,
+      type: 'Professional Certificate',
+      downloadUrl: '/Introduction_to_IoT_certificate_nirmalkoza-gmail-com_6c909743-86c7-4c08-92f0-3e8fbab6ab74.pdf',
+      verifyUrl: 'https://www.netacad.com/',
+      skills: ['IoT', 'Digital Transformation', 'Connected Devices', 'Industry 4.0'],
+      color: 'from-emerald-500 via-teal-500 to-cyan-600',
+      bgPattern: 'bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10',
+      iconBg: 'bg-gradient-to-r from-emerald-500 to-teal-600',
+      credentialId: 'CISCO-IOT-2025-002',
+      level: 'Intermediate',
+      hours: '20+'
+    },
+    {
       title: 'CISCO Introduction to Cybersecurity',
       issuer: 'Cisco Networking Academy',
       date: 'July 2025',

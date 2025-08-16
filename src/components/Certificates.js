@@ -28,6 +28,23 @@ const Certificates = () => {
       hours: '25+'
     },
     {
+      title: 'Introduction to AWS CloudFormation',
+      issuer: 'AWS Training',
+      date: 'August 2025',
+      description: 'Fundamentals of AWS CloudFormation, including infrastructure as code, stack management, and automation best practices.',
+      icon: Cloud,
+      type: 'Professional Certificate',
+      downloadUrl: null,
+      verifyUrl: null,
+      skills: ['AWS', 'CloudFormation', 'Infrastructure as Code', 'Automation'],
+      color: 'from-yellow-400 via-orange-400 to-blue-500',
+      bgPattern: 'bg-gradient-to-br from-yellow-50 to-blue-50 dark:from-yellow-900/10 dark:to-blue-900/10',
+      iconBg: 'bg-gradient-to-r from-yellow-400 to-blue-500',
+      credentialId: 'AWS-CF-2025-001',
+      level: 'Beginner',
+      hours: '10+'
+    },
+    {
       title: 'Introduction to IoT and Digital Transformation',
       issuer: 'Cisco Networking Academy',
       date: 'August 2025',

@@ -35,7 +35,7 @@ const Certificates = () => {
       icon: Cloud,
       type: 'Professional Certificate',
   downloadUrl: '/CertificateOfCompletion_Introduction to AWS CloudFormation.pdf',
-      verifyUrl: null,
+  verifyUrl: 'https://www.linkedin.com/learning/certificates/26f2d1757dd8873669e527253d5edc307d47da7ad0ce674c2ba6742266908430?trk=share_certificate',
       skills: ['AWS', 'CloudFormation', 'Infrastructure as Code', 'Automation'],
       color: 'from-yellow-400 via-orange-400 to-blue-500',
       bgPattern: 'bg-gradient-to-br from-yellow-50 to-blue-50 dark:from-yellow-900/10 dark:to-blue-900/10',

@@ -34,7 +34,7 @@ const Certificates = () => {
       description: 'Fundamentals of AWS CloudFormation, including infrastructure as code, stack management, and automation best practices.',
       icon: Cloud,
       type: 'Professional Certificate',
-      downloadUrl: null,
+  downloadUrl: '/CertificateOfCompletion_Introduction to AWS CloudFormation.pdf',
       verifyUrl: null,
       skills: ['AWS', 'CloudFormation', 'Infrastructure as Code', 'Automation'],
       color: 'from-yellow-400 via-orange-400 to-blue-500',

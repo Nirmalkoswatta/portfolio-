@@ -45,8 +45,8 @@ const Footer = () => {
               <span className="text-xl font-bold text-gray-800 dark:text-white">Nirmal Koswatta</span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-              Software Engineering student passionate about creating innovative solutions 
-              and building the future through code.
+              Associate DevOps Engineer candidate focused on cloud infrastructure, CI/CD,
+              Kubernetes, observability, and DevSecOps.
             </p>
           </motion.div>
 
@@ -125,7 +125,7 @@ const Footer = () => {
           <div className="flex items-center space-x-6 text-sm text-gray-600 dark:text-gray-400">
             <span>Built with React & Tailwind CSS</span>
             <span>•</span>
-            <span>Deployed on Netlify</span>
+            <span>Focused on DevOps, Cloud & Security</span>
           </div>
 
           {/* Back to Top Button */}

@@ -76,7 +76,7 @@ function App() {
           <div className="w-32 h-32 mx-auto mb-4">
             <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           </div>
-          <h2 className="text-xl font-semibold text-white">Loading Portfolio...</h2>
+          <h2 className="text-xl font-semibold text-white">Loading DevOps Portfolio...</h2>
         </div>
       </div>
     );

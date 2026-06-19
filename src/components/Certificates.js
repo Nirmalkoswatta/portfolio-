@@ -150,12 +150,12 @@ const Certificates = () => {
             className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 rounded-full mb-6"
           >
             <Award className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-            <span className="text-sm font-semibold text-primary-600 dark:text-primary-400">Professional Development</span>
+            <span className="text-sm font-semibold text-primary-600 dark:text-primary-400">Cloud, Security, and DevOps Learning</span>
           </motion.div>
 
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-gray-900 via-primary-600 to-primary-800 dark:from-gray-100 dark:via-primary-400 dark:to-primary-300 bg-clip-text text-transparent">
-              Certifications
+              DevOps Certifications
             </span>
             <br />
             <span className="gradient-text">& Achievements</span>
@@ -167,7 +167,7 @@ const Certificates = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
-            Validated expertise through industry-recognized certifications and continuous learning initiatives
+            Certificates that support my target path in DevSecOps, cloud infrastructure, automation, and cybersecurity.
           </motion.p>
         </motion.div>
 
@@ -380,7 +380,7 @@ const Certificates = () => {
                 transition={{ duration: 0.6, delay: 1.2 }}
                 className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8"
               >
-                My journey in technology is driven by continuous learning and professional growth. These certifications represent my commitment to staying at the forefront of industry standards and best practices.
+                My learning path is intentionally aligned with associate DevOps, cloud, and security roles: secure delivery, infrastructure automation, cloud governance, and operational awareness.
               </motion.p>
 
               <motion.div

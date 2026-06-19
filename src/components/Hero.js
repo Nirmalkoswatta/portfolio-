@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Download, Mail, ShieldCheck, ServerCog } from 'lucide-react';
-import profileImg from '../assets/profile1.jpg';
+import profileImg from '../assets/propic.jpg';
 import { Typewriter } from 'react-simple-typewriter';
 
 const Hero = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Download, Mail, ShieldCheck, ServerCog } from 'lucide-react';
+import { ChevronDown, Download, FileText, Mail, ShieldCheck, ServerCog } from 'lucide-react';
 import profileImg from '../assets/propic.jpg';
 import { Typewriter } from 'react-simple-typewriter';
 
@@ -90,7 +90,7 @@ const Hero = () => {
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 justify-center lg:justify-start">
               <motion.button
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -110,6 +110,17 @@ const Hero = () => {
               >
                 <Download className="w-5 h-5" />
                 Download CV
+              </motion.a>
+
+              <motion.a
+                href="/Nirmal Koswatta cover letter.pdf"
+                download
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center justify-center gap-3 px-7 py-4 border-2 border-emerald-300 dark:border-emerald-500/40 text-emerald-700 dark:text-emerald-300 font-semibold rounded-xl bg-white/80 dark:bg-dark-900/70"
+              >
+                <FileText className="w-5 h-5" />
+                Cover Letter
               </motion.a>
             </div>
           </motion.div>

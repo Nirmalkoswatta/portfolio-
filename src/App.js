@@ -40,6 +40,12 @@ function App() {
     localStorage.setItem('theme', newTheme ? 'dark' : 'light');
   };
 
+  const loadingSteps = [
+    'Provisioning cloud profile',
+    'Checking CI/CD pipeline',
+    'Loading observability stack'
+  ];
+
   // Particle options
   const particlesInit = useCallback(async (engine) => {
     await loadFull(engine);
@@ -71,13 +77,59 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-32 h-32 mx-auto mb-4">
-            <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          </div>
-          <h2 className="text-xl font-semibold text-white">Loading DevOps Portfolio...</h2>
+      <div className="min-h-screen bg-[#050816] flex items-center justify-center overflow-hidden relative px-6">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-16 right-10 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl"></div>
         </div>
+        <div className="absolute inset-0 opacity-[0.08]" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }} />
+
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="relative w-full max-w-xl rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-xl shadow-2xl p-6 sm:p-8"
+        >
+          <div className="flex items-center justify-between mb-7">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-emerald-300 font-semibold">DevOps Portfolio</p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mt-2">Booting Nirmal Koswatta</h2>
+            </div>
+            <div className="relative w-16 h-16">
+              <div className="absolute inset-0 rounded-2xl border border-primary-400/40"></div>
+              <div className="absolute inset-2 rounded-xl bg-gradient-to-br from-primary-500 to-emerald-500 animate-pulse"></div>
+              <div className="absolute inset-0 rounded-2xl border-2 border-transparent border-t-emerald-300 border-r-primary-400 animate-spin"></div>
+            </div>
+          </div>
+
+          <div className="space-y-3 mb-7">
+            {loadingSteps.map((step, index) => (
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.45, delay: 0.15 + index * 0.15 }}
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3"
+              >
+                <span className="text-sm text-gray-200">{step}</span>
+                <span className="text-xs font-semibold text-emerald-300">OK</span>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+            <motion.div
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+              className="h-full bg-gradient-to-r from-primary-400 via-cyan-300 to-emerald-400"
+            />
+          </div>
+          <p className="mt-4 text-sm text-gray-400 font-mono">deploy --target=associate-devops --status=ready</p>
+        </motion.div>
       </div>
     );
   }

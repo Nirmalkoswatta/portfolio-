@@ -91,7 +91,7 @@ const Hero = ({ onOpenTerminal }) => {
           {/* Quick Technology Chips */}
           <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex flex-wrap items-center gap-2">
             <span className="font-mono text-[11px] text-slate-500 uppercase mr-1">STACK:</span>
-            {['AWS', 'Kubernetes', 'Docker', 'Terraform', 'GitHub Actions', 'Grafana', 'Prometheus', 'DevSecOps', 'Oracle DB'].map((tech) => (
+            {['AWS', 'Azure', 'Kubernetes', 'Docker', 'Terraform', 'GitHub Actions', 'Grafana', 'Prometheus', 'DevSecOps', 'Oracle DB'].map((tech) => (
               <span
                 key={tech}
                 className="font-mono text-[11px] px-2.5 py-1 rounded-md bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 shadow-sm"

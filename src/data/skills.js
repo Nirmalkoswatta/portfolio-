@@ -16,6 +16,12 @@ export const skillCategories = [
         description: 'Cloud infrastructure provisioning, security policies, cost optimization, and resource management.',
       },
       {
+        name: 'Azure',
+        level: 'WORKING',
+        context: ['Virtual Machines', 'Blob Storage', 'Azure DevOps', 'Entra ID', 'VNet', 'Resource Groups'],
+        description: 'Cloud infrastructure provisioning, virtual networks, identity access management, and automated deployments.',
+      },
+      {
         name: 'Huawei Cloud',
         level: 'WORKING',
         context: ['ECS', 'OBS', 'VPC', 'IAM'],

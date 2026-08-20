@@ -52,26 +52,37 @@ function App() {
     });
   };
 
-  // Initialize Lenis smooth scroll
+  // Initialize ultra-smooth Lenis scroll
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
       smoothWheel: true,
-      smoothTouch: false,
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.6,
+      infinite: false,
     });
 
+    document.documentElement.classList.add('lenis', 'lenis-smooth');
+    window.__lenis = lenis;
+
+    let animationFrameId;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      animationFrameId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    animationFrameId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       lenis.destroy();
+      document.documentElement.classList.remove('lenis', 'lenis-smooth');
+      delete window.__lenis;
     };
   }, []);
 

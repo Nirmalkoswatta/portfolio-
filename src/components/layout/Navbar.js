@@ -42,7 +42,11 @@ const Navbar = ({ darkMode, toggleTheme, onOpenTerminal }) => {
   const scrollToSection = (href) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      if (window.__lenis) {
+        window.__lenis.scrollTo(element, { offset: -70, duration: 1.1 });
+      } else {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     setIsMobileMenuOpen(false);
   };

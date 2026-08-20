@@ -1,38 +1,59 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Download, Mail } from 'lucide-react';
-import profileImg from '../assets/profile1.jpg';
+import profileImg from '../assets/profile123.jpg';
 import { Typewriter } from 'react-simple-typewriter';
+import TechStackCarousel from './TechStackCarousel';
+import Particles from 'react-tsparticles';
 
 const Hero = () => {
   const scrollToAbout = () => {
     document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
   };
 
+    // Profile image ref (no tilt)
+    const profileRef = useRef(null);
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-50 dark:bg-dark-800">
-      {/* Background Effects - Same as other sections */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-primary-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-      </div>
+  <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-50 dark:bg-dark-800 pt-24 pb-24">
+      {/* Modern Animated Background */}
+      <Particles
+        className="absolute inset-0 -z-10"
+        options={{
+          background: { color: { value: '#f8fafc' } },
+          fpsLimit: 60,
+          interactivity: {
+            events: { onHover: { enable: true, mode: 'repulse' }, resize: true },
+            modes: { repulse: { distance: 100, duration: 0.4 } },
+          },
+          particles: {
+            color: { value: ['#06b6d4', '#0ea5e9', '#6366f1', '#f59e42'] },
+            links: { enable: true, color: '#38bdf8', distance: 150, opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 1.5, outModes: { default: 'bounce' } },
+            number: { value: 40 },
+            opacity: { value: 0.5 },
+            shape: { type: 'circle' },
+            size: { value: { min: 2, max: 6 } },
+          },
+          detectRetina: true,
+        }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 section-padding">
+  <div className="relative z-20 section-padding">
         <div className="container-custom flex flex-col md:flex-row items-center justify-center max-w-6xl mx-auto text-center md:text-left gap-8 md:gap-16">
-          {/* Profile Picture Left */}
+          {/* Profile Picture with 3D Tilt */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex-shrink-0 mb-8 md:mb-0 relative"
           >
-            {/* Profile Image with simple styling */}
-            <div className="relative">
+            <div ref={profileRef} className="relative shadow-2xl rounded-full">
               <img
                 src={profileImg}
                 alt="Nirmal Koswatta profile"
-                className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-white/20 dark:border-primary-500/30 shadow-2xl"
+                className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full object-cover border-4 border-white/20 dark:border-primary-500/30"
                 style={{ 
                   boxShadow: '0 20px 60px rgba(14, 165, 233, 0.3), 0 8px 20px rgba(0, 0, 0, 0.2)',
                   filter: 'brightness(1.05) contrast(1.1)'
@@ -74,6 +95,10 @@ const Hero = () => {
               </motion.h1>
             </motion.div>
 
+            {/* Tech Stack Carousel */}
+            <div className="mb-8">
+              <TechStackCarousel />
+            </div>
             {/* Enhanced Subtitle with glass effect */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -84,7 +109,7 @@ const Hero = () => {
               <div className="glass-effect rounded-2xl p-6 border border-white/20 dark:border-white/10 backdrop-blur-lg bg-white/80 dark:bg-dark-800/80">
                 <p className="text-2xl sm:text-3xl lg:text-4xl text-gray-700 dark:text-gray-200 font-light h-16 flex items-center justify-center md:justify-start">
                   <Typewriter
-                    words={['Full Stack Developer', 'UI/UX Enthusiast', 'React Expert', 'DevOps Learner', 'Problem Solver']}
+                    words={['Associate DevOps Engineer', 'Kubernetes & AWS', 'CI/CD & Cloud Infrastructure', 'Prometheus & Grafana', 'DevSecOps & Security Automation', 'Terraform & GitHub Actions']}
                     loop={0}
                     cursor
                     cursorStyle='|'
@@ -104,47 +129,21 @@ const Hero = () => {
               className="mb-10"
             >
               <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto md:mx-0">
-                Passionate about creating innovative solutions and building the future through code. 
-                Currently pursuing Computer Science at SLIIT CityUNI with a focus on modern web technologies 
-                and emerging AI trends.
+                Junior DevOps Engineer at Zuse Technologies with hands-on experience as an Intern DevSecOps Engineer at Fortude. 
+                Specializing in CI/CD pipeline automation, Infrastructure as Code (Terraform), system observability (Grafana & Prometheus), 
+                and database reliability.
               </p>
             </motion.div>
 
             {/* Enhanced Motivation Quote with premium styling */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="mb-12"
-            >
-              <div className="glass-effect rounded-3xl p-8 border border-white/20 dark:border-white/10 backdrop-blur-lg relative overflow-hidden group hover:scale-105 transition-all duration-500 bg-white/80 dark:bg-dark-800/80">
-                {/* Background glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-cyan-500/10 group-hover:from-primary-500/20 group-hover:to-cyan-500/20 transition-all duration-500"></div>
-                
-                {/* Quote content */}
-                <div className="relative z-10">
-                  <div className="flex items-start space-x-4">
-                    <div className="text-4xl text-primary-400 opacity-70 font-serif">"</div>
-                    <div>
-                      <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-200 italic font-light leading-relaxed">
-                        I stopped chasing people, and started building my future.
-                      </p>
-                      <div className="mt-4 flex items-center space-x-2">
-                        <div className="h-0.5 w-12 bg-gradient-to-r from-primary-400 to-cyan-400 rounded-full"></div>
-                        <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">Personal Motto</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            {/* ...removed personal motto/quote section... */}
 
             {/* Enhanced CTA Buttons */}
-            <motion.div
+              <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.4 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start items-center"
+              className="flex flex-col sm:flex-row gap-12 sm:gap-6 justify-center md:justify-start items-center"
             >
               {/* Primary CTA */}
               <motion.button
@@ -169,8 +168,8 @@ const Hero = () => {
 
               {/* Secondary CTA */}
               <motion.a
-                href="/Nirmal Koswatta CV.pdf"
-                download
+                href="/Nirmal Koswatta ADE CV.pdf"
+                download="Nirmal Koswatta ADE CV.pdf"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="group relative overflow-hidden px-8 py-4 border-2 border-gray-300 dark:border-white/30 text-gray-700 dark:text-white font-semibold rounded-2xl hover:border-primary-400 transition-all duration-500 backdrop-blur-sm glass-effect bg-white/80 dark:bg-dark-800/80"

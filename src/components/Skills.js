@@ -1,302 +1,81 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Code, Database, Globe, Cpu, Palette, Settings, Zap } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
+import { FaReact, FaPython, FaDocker, FaServer, FaShieldAlt } from 'react-icons/fa';
+import { SiGrafana, SiPrometheus, SiTerraform, SiGithubactions, SiOracle } from 'react-icons/si';
+import { Cpu, Rocket } from 'lucide-react';
 
 const Skills = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-  
   const [selectedSkill, setSelectedSkill] = useState(null);
 
-  // Enhanced skills data with icons
+  // Unified skills data with official icons, hex colors, and detailed descriptions
   const skillsData = [
-    { 
-      name: 'React', 
-      color: 'from-cyan-400 to-cyan-600', 
-      icon: Code,
-      category: 'Frontend',
-      description: 'Building dynamic user interfaces with React hooks and modern patterns'
-    },
-    { 
-      name: 'JavaScript', 
-      color: 'from-yellow-400 to-yellow-600', 
-      icon: Zap,
-      category: 'Frontend',
-      description: 'Modern ES6+ JavaScript programming and async operations'
-    },
-    { 
-      name: 'Angular', 
-      color: 'from-red-500 to-red-700', 
-      icon: Globe,
-      category: 'Frontend',
-      description: 'TypeScript-based web framework for large applications'
-    },
-    { 
-      name: 'Java Spring', 
-      color: 'from-red-400 to-red-600', 
-      icon: Database,
-      category: 'Backend',
-      description: 'Enterprise Java applications with Spring Boot framework'
-    },
-    { 
-      name: 'SpringBoot', 
-      color: 'from-green-500 to-green-700', 
-      icon: Settings,
-      category: 'Backend',
-      description: 'Microservices and enterprise Java development framework'
-    },
-    { 
-      name: 'Node.js', 
-      color: 'from-green-400 to-green-600', 
-      icon: Settings,
-      category: 'Backend',
-      description: 'Server-side JavaScript development with Express and APIs'
-    },
-    { 
-      name: 'PHP', 
-      color: 'from-purple-500 to-purple-700', 
-      icon: Code,
-      category: 'Backend',
-      description: 'Server-side scripting and web development'
-    },
-    { 
-      name: 'Laravel', 
-      color: 'from-red-600 to-orange-600', 
-      icon: Database,
-      category: 'Backend',
-      description: 'PHP framework for elegant web application development'
-    },
-    { 
-      name: 'MySQL', 
-      color: 'from-blue-400 to-blue-600', 
-      icon: Database,
-      category: 'Database',
-      description: 'Relational database design and optimization'
-    },
-    { 
-      name: 'Firebase', 
-      color: 'from-orange-400 to-orange-600', 
-      icon: Database,
-      category: 'Database',
-      description: 'Real-time database and cloud hosting solutions'
-    },
-    { 
-      name: 'Redux', 
-      color: 'from-purple-400 to-purple-600', 
-      icon: Settings,
-      category: 'Frontend',
-      description: 'Predictable state container for JavaScript applications'
-    },
-    { 
-      name: 'TailwindCSS', 
-      color: 'from-teal-400 to-teal-600', 
-      icon: Palette,
-      category: 'Frontend',
-      description: 'Utility-first CSS framework for rapid UI development'
-    },
-    { 
-      name: 'CSS', 
-      color: 'from-blue-500 to-blue-700', 
-      icon: Palette,
-      category: 'Frontend',
-      description: 'Styling and layout for modern web applications'
-    },
-    { 
-      name: 'TypeScript', 
-      color: 'from-blue-600 to-blue-800', 
-      icon: Code,
-      category: 'Frontend',
-      description: 'Strongly typed JavaScript for large-scale applications'
-    },
-    { 
-      name: 'GraphQL', 
-      color: 'from-pink-500 to-purple-600', 
-      icon: Database,
-      category: 'Backend',
-      description: 'Query language for APIs and runtime for executing queries'
-    },
-    { 
-      name: 'MongoDB', 
-      color: 'from-green-600 to-green-800', 
-      icon: Database,
-      category: 'Database',
-      description: 'NoSQL document database for modern applications'
-    },
-    { 
-      name: 'Material-UI', 
-      color: 'from-blue-500 to-indigo-600', 
-      icon: Palette,
-      category: 'Frontend',
-      description: 'React components implementing Google\'s Material Design'
-    },
-    { 
-      name: 'Django', 
-      color: 'from-green-700 to-green-900', 
-      icon: Code,
-      category: 'Backend',
-      description: 'High-level Python web framework for rapid development'
-    },
-    { 
-      name: 'Python', 
-      color: 'from-blue-500 to-yellow-500', 
-      icon: Code,
-      category: 'Backend',
-      description: 'Versatile programming language for web and software development'
-    },
-    { 
-      name: 'JWT', 
-      color: 'from-orange-500 to-red-600', 
-      icon: Settings,
-      category: 'Backend',
-      description: 'JSON Web Tokens for secure authentication and authorization'
-    },
-    { 
-      name: 'EmailJS', 
-      color: 'from-yellow-500 to-orange-500', 
-      icon: Globe,
-      category: 'Frontend',
-      description: 'Send emails directly from client-side JavaScript'
-    },
-    { 
-      name: 'SCSS', 
-      color: 'from-pink-500 to-pink-700', 
-      icon: Palette,
-      category: 'Frontend',
-      description: 'Enhanced CSS with variables, nesting, and mixins'
-    },
-    { 
-      name: 'AWS', 
-      color: 'from-orange-500 to-yellow-500', 
-      icon: Cpu,
-      category: 'Cloud',
-      description: 'Amazon Web Services cloud computing platform'
-    },
-    { 
-      name: 'Azure', 
-      color: 'from-blue-600 to-cyan-600', 
-      icon: Cpu,
-      category: 'Cloud',
-      description: 'Microsoft cloud computing services and solutions'
-    },
-    { 
-      name: 'Docker', 
-      color: 'from-blue-400 to-cyan-500', 
-      icon: Settings,
-      category: 'DevOps',
-      description: 'Containerization platform for application deployment'
-    },
-    { 
-      name: 'Kubernetes', 
-      color: 'from-blue-600 to-indigo-700', 
-      icon: Cpu,
-      category: 'DevOps',
-      description: 'Container orchestration and management platform'
-    },
-    { 
-      name: 'GitHub', 
-      color: 'from-gray-700 to-gray-900', 
-      icon: Code,
-      category: 'DevOps',
-      description: 'Version control and collaborative software development'
-    },
-    { 
-      name: 'GitHub Actions', 
-      color: 'from-gray-600 to-black', 
-      icon: Settings,
-      category: 'DevOps',
-      description: 'CI/CD automation and workflow management'
-    },
-    { 
-      name: 'Netlify', 
-      color: 'from-teal-500 to-cyan-600', 
-      icon: Globe,
-      category: 'Deployment',
-      description: 'Modern web deployment and hosting platform'
-    },
-    { 
-      name: 'Bash', 
-      color: 'from-gray-800 to-black', 
-      icon: Code,
-      category: 'Tools',
-      description: 'Command-line scripting and system automation'
-    },
-    { 
-      name: 'Android Studio', 
-      color: 'from-green-600 to-green-800', 
-      icon: Globe,
-      category: 'Mobile',
-      description: 'Android application development environment'
-    },
+    { name: 'Grafana', icon: SiGrafana, color: '#F46800', category: 'Monitoring & Observability', description: 'Designing real-time interactive dashboards, alert management, and metric visualization across cloud infrastructure and microservices.' },
+    { name: 'Prometheus', icon: SiPrometheus, color: '#E6522C', category: 'Monitoring & Metrics', description: 'Time-series metric collection, target discovery, custom alert rules, and system health monitoring.' },
+    { name: 'Terraform', icon: SiTerraform, color: '#844FBA', category: 'Infrastructure as Code', description: 'Declarative IaC provisioning, multi-environment infrastructure state management, and cloud resource automation.' },
+    { name: 'GitHub Actions', icon: SiGithubactions, color: '#2088FF', category: 'CI/CD Automation', description: 'Building end-to-end continuous integration and delivery pipelines, matrix testing, and automated release deployment.' },
+    { name: 'Coolify', icon: FaServer, color: '#6366F1', category: 'PaaS & Deployment', description: 'Self-hosted PaaS management, automated application staging, containerized deployments, and server orchestration.' },
+    { name: 'Oracle DB', icon: SiOracle, color: '#F80000', category: 'Database Management', description: 'Enterprise relational database administration, query optimization, schema migrations, and high-availability database setups.' },
+    { name: 'DevSecOps', icon: FaShieldAlt, color: '#10B981', category: 'Security & Automation', description: 'Embedding SAST/DAST, dependency auditing, secret detection, and automated security gates into CI/CD pipelines.' },
+    { name: 'Docker', icon: FaDocker, color: '#2496ED', category: 'Containerization', description: 'Container runtime management, multi-stage builds, microservice isolation, and Docker Compose orchestration.' },
+    { name: 'CI/CD Pipelines', icon: Rocket, color: '#EC4899', category: 'DevOps', description: 'Automating build, test, scan, and release cycles to achieve continuous deployment with zero downtime.' },
+    { name: 'AWS Cloud', icon: Cpu, color: '#FF9900', category: 'Cloud Infrastructure', description: 'Cloud infrastructure management, EC2, S3, RDS, IAM policies, and cloud cost optimization.' },
+    { name: 'React', icon: FaReact, color: '#61DAFB', category: 'Frontend Engineering', description: 'Building modern responsive web interfaces with React hooks, state management, and SPA architecture.' },
+    { name: 'Python', icon: FaPython, color: '#3776AB', category: 'Backend & Scripting', description: 'Automation scripting, backend web APIs, data processing, and DevOps automation scripts.' },
   ];
 
   return (
-    <section id="skills" className="section-padding bg-gray-50 dark:bg-dark-800 relative overflow-hidden">
+  <section id="skills" className="section-padding bg-gray-50 dark:bg-dark-800 relative z-20 overflow-visible" style={{ scrollMarginTop: '88px' }}>
       {/* Background Effects */}
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 -z-10 opacity-30">
         <div className="absolute top-20 left-20 w-64 h-64 bg-primary-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      <div className="container-custom relative z-10">
+      <div className="container-custom relative z-30">
         {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+  <ScrollReveal className="text-center mb-16" amount={0.15} delay={0}>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             My <span className="gradient-text">Skills & Expertise</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Click on any skill card to see detailed information about my expertise and experience level.
           </p>
-        </motion.div>
+  </ScrollReveal>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
-          {skillsData.map((skill, index) => {
-            const Icon = skill.icon;
-            
-            return (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.05 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedSkill(skill)}
-                className="group relative cursor-pointer"
-              >
-                <div className={`p-6 rounded-2xl bg-gradient-to-br ${skill.color} text-white transform transition-all duration-300 shadow-lg hover:shadow-2xl`}>
-                  {/* Icon */}
-                  <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl mb-4">
-                    <Icon className="w-6 h-6 text-white" />
+        <ScrollReveal amount={0.12} delay={0.1} className="mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {skillsData.map((skill, index) => {
+              const Icon = skill.icon;
+              return (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.12 }}
+                  transition={{ duration: 0.6, delay: index * 0.05 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedSkill(skill)}
+                  className="group relative cursor-pointer"
+                >
+                  <div className={`p-6 rounded-2xl text-white transform transition-all duration-300 shadow-lg hover:shadow-2xl`} style={{ background: skill.color }}>
+                    <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-xl mb-4">
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2">{skill.name}</h3>
+                    <p className="text-white/80 text-sm">{skill.category}</p>
+                    <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-30 blur-xl scale-110 transition-all duration-300 -z-10`} style={{ background: skill.color }}></div>
+                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    </div>
                   </div>
-                  
-                  {/* Skill Name */}
-                  <h3 className="text-lg font-bold mb-2">{skill.name}</h3>
-                  
-                  {/* Category */}
-                  <p className="text-white/80 text-sm">{skill.category}</p>
-                  
-                  {/* Hover Glow Effect */}
-                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-30 blur-xl scale-110 transition-all duration-300 -z-10`}></div>
-                  
-                  {/* Click Indicator */}
-                  <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                </motion.div>
+              );
+            })}
+          </div>
+  </ScrollReveal>
 
         {/* Selected Skill Details */}
         {selectedSkill && (
@@ -308,7 +87,7 @@ const Skills = () => {
           >
             <div className="max-w-2xl mx-auto glass-effect rounded-3xl p-8 border border-white/20 backdrop-blur-lg bg-white/80 dark:bg-dark-800/80">
               <div className="flex items-center gap-4 mb-6">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${selectedSkill.color} flex items-center justify-center shadow-lg`}>
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg`} style={{ background: selectedSkill.color }}>
                   <selectedSkill.icon className="w-8 h-8 text-white" />
                 </div>
                 <div>
@@ -346,7 +125,8 @@ const Skills = () => {
         {/* Additional Skills Grid */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-16"
         >
@@ -356,17 +136,18 @@ const Skills = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
-              { name: 'TypeScript', icon: '📝', color: 'from-blue-500 to-blue-700' },
-              { name: 'Next.js', icon: '⚡', color: 'from-gray-700 to-gray-900' },
-              { name: 'Docker', icon: '🐳', color: 'from-blue-400 to-cyan-500' },
-              { name: 'AWS', icon: '☁️', color: 'from-orange-400 to-orange-600' },
-              { name: 'GraphQL', icon: '🔗', color: 'from-pink-500 to-purple-600' },
               { name: 'Kubernetes', icon: '⚙️', color: 'from-blue-600 to-indigo-700' },
+              { name: 'Cloud Security', icon: '🔒', color: 'from-emerald-500 to-teal-700' },
+              { name: 'Ansible', icon: '🛠️', color: 'from-red-500 to-red-700' },
+              { name: 'GitLab CI', icon: '🦊', color: 'from-orange-500 to-amber-600' },
+              { name: 'Linux Admin', icon: '🐧', color: 'from-slate-600 to-slate-800' },
+              { name: 'ArgoCD', icon: '🐙', color: 'from-cyan-500 to-blue-600' },
             ].map((skill, index) => (
               <motion.div
                 key={skill.name}
                 initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
                 whileHover={{ scale: 1.05, y: -5 }}
                 className="group relative"
@@ -386,7 +167,8 @@ const Skills = () => {
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.8, delay: 1.2 }}
           className="mt-16 text-center"
         >

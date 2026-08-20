@@ -11,6 +11,74 @@ const Certificates = () => {
 
   const certificates = [
     {
+      title: 'DevOps Foundations',
+      issuer: 'LinkedIn Learning',
+      date: 'August 2025',
+      description: 'Foundational course on DevOps principles, culture, and practices for modern software development and delivery.',
+      icon: Star,
+      type: 'Professional Certificate',
+      downloadUrl: '/CertificateOfCompletion_DevOps Foundations.pdf',
+      verifyUrl: 'https://www.linkedin.com/learning/certificates/b98432efbbd7d0dfae14489ad15b9446d62a5cfe937efc32cd87216938c418bf?trk=share_certificate',
+      skills: ['DevOps', 'Collaboration', 'Automation', 'Software Delivery'],
+      color: 'from-yellow-500 via-orange-500 to-red-600',
+      bgPattern: 'bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/10 dark:to-orange-900/10',
+      iconBg: 'bg-gradient-to-r from-yellow-500 to-red-600',
+      credentialId: 'LI-DEVOPS-2025-004',
+      level: 'Beginner',
+      hours: '7+'
+    },
+    {
+      title: 'DevOps Foundations: Containers',
+      issuer: 'LinkedIn Learning',
+      date: 'August 2025',
+      description: 'In-depth course on containerization in DevOps, covering Docker, container orchestration, and best practices for scalable deployments.',
+      icon: Cloud,
+      type: 'Professional Certificate',
+      downloadUrl: '/CertificateOfCompletion_DevOps Foundations Containers.pdf',
+      verifyUrl: 'https://www.linkedin.com/learning/certificates/09641ef6e7c2a17b8eb7b7418b21dd8de1f84e6b2790027cfb8bcc69e782b3d9?trk=share_certificate',
+      skills: ['DevOps', 'Containers', 'Docker', 'Orchestration'],
+      color: 'from-blue-500 via-green-500 to-indigo-600',
+      bgPattern: 'bg-gradient-to-br from-blue-50 to-green-50 dark:from-blue-900/10 dark:to-green-900/10',
+      iconBg: 'bg-gradient-to-r from-blue-500 to-green-600',
+      credentialId: 'LI-DEVOPS-2025-003',
+      level: 'Intermediate',
+      hours: '10+'
+    },
+    {
+      title: 'Ethical Hacking: SQL Injection',
+      issuer: 'LinkedIn Learning',
+      date: 'August 2025',
+      description: 'Specialized course on ethical hacking techniques focused on SQL Injection vulnerabilities, detection, and prevention strategies.',
+      icon: Shield,
+      type: 'Professional Certificate',
+      downloadUrl: '/CertificateOfCompletion_Ethical Hacking SQL Injection.pdf',
+      verifyUrl: 'https://www.linkedin.com/learning/certificates/19290308324b56b2305456f77281196da40356ec377a8359b60305c2561535ba?trk=share_certificate',
+      skills: ['Ethical Hacking', 'SQL Injection', 'Web Security', 'Penetration Testing'],
+      color: 'from-pink-500 via-red-500 to-yellow-600',
+      bgPattern: 'bg-gradient-to-br from-pink-50 to-yellow-50 dark:from-pink-900/10 dark:to-yellow-900/10',
+      iconBg: 'bg-gradient-to-r from-pink-500 to-yellow-600',
+      credentialId: 'LI-EHSQL-2025-001',
+      level: 'Intermediate',
+      hours: '8+'
+    },
+    {
+      title: 'DevOps Foundations: Continuous Delivery/Continuous Integration',
+      issuer: 'LinkedIn Learning',
+      date: 'August 2025',
+      description: 'Comprehensive course on DevOps foundations, focusing on CI/CD pipelines, automation, and best practices for modern software delivery.',
+      icon: Star,
+      type: 'Professional Certificate',
+      downloadUrl: '/CertificateOfCompletion_DevOps Foundations.pdf',
+      verifyUrl: 'https://www.linkedin.com/learning/certificates/0df6a7ec108b0117ad7b4806020bc4199d801fb84d211a74ba16565acbc8fad0?trk=share_certificate',
+      skills: ['DevOps', 'CI/CD', 'Continuous Delivery', 'Continuous Integration', 'Automation'],
+      color: 'from-green-500 via-blue-500 to-purple-600',
+      bgPattern: 'bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/10 dark:to-blue-900/10',
+      iconBg: 'bg-gradient-to-r from-green-500 to-blue-600',
+      credentialId: 'LI-DEVOPS-2025-002',
+      level: 'Intermediate',
+      hours: '15+'
+    },
+    {
       title: 'Application Security in DevSecOps',
       issuer: 'LinkedIn Learning',
       date: 'August 2025',
@@ -95,6 +163,25 @@ const Certificates = () => {
       level: 'Beginner',
       hours: '15+'
     }
+    ,
+    {
+      title: 'AWS DevOps Best Practices for Beginners',
+      issuer: 'AWS Training',
+      date: 'August 2025',
+      description: 'AWS DevOps best practices course covering CI/CD, infrastructure as code, monitoring, and operational excellence.',
+      icon: Cloud,
+      type: 'Professional Certificate',
+      // Download filename provided by user (assumed .pdf extension)
+      downloadUrl: '/CertificateOfCompletion_AWS DevOps Best Practices for Beginners.pdf',
+      verifyUrl: null,
+      skills: ['AWS', 'DevOps', 'CI/CD', 'Infrastructure as Code'],
+      color: 'from-orange-400 via-yellow-400 to-amber-500',
+      bgPattern: 'bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-900/10 dark:to-yellow-900/10',
+      iconBg: 'bg-gradient-to-r from-orange-400 to-amber-500',
+      credentialId: 'AWS-DEVOPS-2025-001',
+      level: 'Beginner',
+      hours: '8+'
+    }
   ];
 
   const containerVariants = {
@@ -125,7 +212,7 @@ const Certificates = () => {
   };
 
   return (
-    <section id="certificates" className="section-padding bg-white dark:bg-dark-900 relative overflow-hidden">
+  <section id="certificates" className="section-padding bg-white dark:bg-dark-900 relative z-20 overflow-visible" style={{ scrollMarginTop: '88px' }}>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5 dark:opacity-10">
         <div className="absolute inset-0" style={{
@@ -134,7 +221,7 @@ const Certificates = () => {
         }} />
       </div>
 
-      <div className="container-custom relative z-10">
+  <div className="container-custom relative z-30">
         {/* Section Header */}
         <motion.div
           ref={ref}

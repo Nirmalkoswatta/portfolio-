@@ -6,6 +6,10 @@
   html {
     scroll-behavior: smooth;
   }
+  /* Ensure anchor scrolling accounts for fixed navbar height (~88px) */
+  :root {
+    scroll-padding-top: 88px;
+  }
   
   body {
     @apply bg-white dark:bg-dark-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;

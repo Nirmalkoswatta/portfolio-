@@ -51,5 +51,7 @@ node_modules/
 # dotenv environment variables file
 .env
 
-# Vercel
-.vercel 
+# Vercel & Firebase
+.vercel
+.firebase
+firebase-debug.log

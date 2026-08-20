@@ -83,14 +83,14 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-900 transition-colors duration-300 animated-gradient-bg relative overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-dark-900 transition-colors duration-300 animated-gradient-bg relative">
       {/* Floating Particle Background */}
       <Particles
         id="tsparticles"
         init={particlesInit}
         options={particlesOptions}
-        className="fixed inset-0 w-full h-full z-0 pointer-events-none"
-        style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0 }}
+        className="fixed inset-0 w-full h-full -z-10 pointer-events-none"
+        style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -10 }}
       />
       {/* Main Content */}
       <Navbar darkMode={darkMode} toggleTheme={toggleTheme} />

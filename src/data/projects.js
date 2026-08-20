@@ -5,8 +5,22 @@
 
 export const projects = [
   {
-    id: 'cicd-dashboard',
+    id: 'mytrack-pro',
     number: '01',
+    title: 'MyTrack Pro — Mushroom Farm ERP & AI Operations Platform',
+    category: 'Full Stack / AI / Cloud',
+    description: 'A production-grade ERP and logistics platform for mushroom farming, integrating harvest and inventory management, B2B orders, dispatch operations, analytics, RBAC, and an AI-powered Operations Assistant. Hosted on Microsoft Azure.',
+    problem: 'Agricultural and commercial mushroom cultivation operations struggled with manual harvest tracking, fragmented B2B logistics, and lack of real-time AI-driven operational insights.',
+    technologies: ['React', 'TypeScript', 'Redux Toolkit', 'Supabase', 'PostgreSQL', 'Ollama', 'Mistral-Nemo', 'Azure', 'RBAC', 'AI/LLM'],
+    features: ['Harvest & Inventory Management', 'B2B Orders & Dispatch Operations', 'AI Operations Assistant (Mistral-Nemo)', 'Supabase PostgreSQL Backend', 'Role-Based Access Control (RBAC)', 'Deployed on Microsoft Azure'],
+    github: 'https://github.com/Nirmalkoswatta/MyTrack-Pro',
+    live: 'https://mytrackpro.4.224.96.167.sslip.io/login',
+    featured: true,
+    architecture: ['React / TS Client', 'Redux Toolkit', 'Supabase Auth & Storage', 'PostgreSQL DB', 'Ollama (Mistral-Nemo)', 'Azure Host'],
+  },
+  {
+    id: 'cicd-dashboard',
+    number: '02',
     title: 'CI/CD Monitoring Dashboard',
     category: 'DevOps / Monitoring',
     description: 'A comprehensive monitoring dashboard for tracking build and deployment status with real-time GitHub Actions integration and automated Slack alerts for failed builds.',
@@ -20,7 +34,7 @@ export const projects = [
   },
   {
     id: 'cloud-expense',
-    number: '02',
+    number: '03',
     title: 'Cloud Expense Optimizer',
     category: 'Cloud / AWS',
     description: 'Full-stack app to analyze and reduce AWS cloud costs. FastAPI backend scans AWS resources (EC2, S3, RDS), calculates usage and savings, and provides actionable recommendations.',

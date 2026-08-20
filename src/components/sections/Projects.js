@@ -6,7 +6,7 @@ import { ExternalLink, Github, ArrowUpRight } from 'lucide-react';
 const Projects = () => {
   const [selectedFilter, setSelectedFilter] = useState('ALL');
 
-  const categories = ['ALL', 'DevOps / Monitoring', 'Cloud / AWS', 'Full Stack', 'Frontend'];
+  const categories = ['ALL', 'Full Stack / AI', 'DevOps / Monitoring', 'Cloud / AWS', 'Frontend'];
 
   const filteredProjects = selectedFilter === 'ALL'
     ? projects

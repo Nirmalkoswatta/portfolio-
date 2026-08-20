@@ -79,18 +79,18 @@ const certificates = [
 
 const Certificates = () => {
   return (
-    <section id="certificates" className="section-padding relative overflow-hidden bg-slate-950/30">
+    <section id="certificates" className="section-padding relative overflow-hidden bg-slate-100/50 dark:bg-slate-950/30">
       <div className="container-custom">
         {/* Section Header */}
         <div className="mb-12">
-          <div className="flex items-center gap-2 mb-2 font-mono text-xs text-blue-400 uppercase tracking-widest">
+          <div className="flex items-center gap-2 mb-2 font-mono text-xs text-blue-600 dark:text-blue-400 uppercase tracking-widest">
             <span className="w-2 h-2 rounded-full bg-blue-500" />
             <span>06 // CREDENTIALS &amp; CERTIFICATIONS</span>
           </div>
-          <h2 className="heading-lg tracking-tight uppercase">
-            VERIFICATION <span className="text-blue-400">WALL</span>
+          <h2 className="heading-lg tracking-tight uppercase text-slate-900 dark:text-white">
+            VERIFICATION <span className="text-blue-600 dark:text-blue-400">WALL</span>
           </h2>
-          <p className="text-sm sm:text-base text-slate-400 mt-1 max-w-xl">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
             Formal professional training and certifications across Cloud, DevOps, Containers, and Cybersecurity.
           </p>
         </div>
@@ -104,27 +104,27 @@ const Certificates = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: idx * 0.05 }}
-              className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 hover:bg-slate-900/90 transition-all duration-300 flex flex-col justify-between"
+              className="p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-900/90 transition-all duration-300 flex flex-col justify-between shadow-sm dark:shadow-none"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 uppercase">
+                  <span className="font-mono text-[10px] text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 uppercase font-semibold">
                     {cert.category}
                   </span>
-                  <span className="font-mono text-[10px] text-slate-500">{cert.date}</span>
+                  <span className="font-mono text-[10px] text-slate-400 dark:text-slate-500">{cert.date}</span>
                 </div>
 
-                <h3 className="font-display font-semibold text-sm text-white leading-snug">
+                <h3 className="font-display font-semibold text-sm text-slate-900 dark:text-white leading-snug">
                   {cert.title}
                 </h3>
 
-                <p className="font-mono text-xs text-slate-400">{cert.issuer}</p>
+                <p className="font-mono text-xs text-slate-600 dark:text-slate-400">{cert.issuer}</p>
 
                 <div className="flex flex-wrap gap-1 pt-1">
                   {cert.skills.slice(0, 3).map((s) => (
                     <span
                       key={s}
-                      className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800/80"
+                      className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800/80"
                     >
                       {s}
                     </span>
@@ -133,12 +133,12 @@ const Certificates = () => {
               </div>
 
               {/* Actions */}
-              <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-800/80">
-                <span className="font-mono text-[10px] text-slate-500">{cert.credentialId}</span>
+              <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80">
+                <span className="font-mono text-[10px] text-slate-400 dark:text-slate-500">{cert.credentialId}</span>
                 <a
                   href={cert.downloadUrl}
                   download
-                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-600 text-slate-600 dark:text-slate-300 hover:text-white transition-colors"
                   title="Download Certificate PDF"
                 >
                   <Download className="w-3.5 h-3.5" />

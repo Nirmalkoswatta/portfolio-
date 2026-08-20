@@ -25,9 +25,35 @@ function App() {
   const [isBootComplete, setIsBootComplete] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
 
+  // Initialize theme from localStorage or default dark
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      setDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    } else {
+      setDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  // Theme toggle handler
+  const toggleTheme = () => {
+    setDarkMode((prev) => {
+      const nextTheme = !prev;
+      if (nextTheme) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      return nextTheme;
+    });
+  };
+
   // Initialize Lenis smooth scroll
   useEffect(() => {
-    // Respect reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
@@ -49,27 +75,14 @@ function App() {
     };
   }, []);
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    if (!darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
-
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark' : ''} bg-[#0a0a0a] text-slate-100 selection:bg-blue-500/20 selection:text-white relative`}>
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-500 relative transition-colors duration-300">
       {/* Short Boot Sequence (~800ms) */}
       {!isBootComplete && (
         <BootSequence onComplete={() => setIsBootComplete(true)} />
       )}
 
-      {/* Subtle Canvas Grid & Atmospheric Ambient Glow */}
+      {/* Canvas Grid & Ambient Glow */}
       <GridBackground />
 
       {/* Desktop Custom Precision Cursor */}

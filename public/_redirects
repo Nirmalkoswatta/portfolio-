@@ -1,1 +1,3 @@
+/*.pdf /:splat 200
+/certificates/*.pdf /certificates/:splat 200
 /*    /index.html   200

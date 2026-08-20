@@ -105,7 +105,7 @@ const Contact = () => {
             Get In <span className="gradient-text">Touch</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology.
+            Open to associate DevOps, cloud, security, platform support, and infrastructure automation opportunities.
           </p>
         </motion.div>
 
@@ -120,8 +120,8 @@ const Contact = () => {
             <div>
               <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
-                Feel free to reach out if you'd like to collaborate on a project, 
-                discuss potential opportunities, or just want to say hello!
+                I am actively looking for roles where I can contribute to CI/CD, Kubernetes, AWS, observability,
+                DevSecOps, and cloud infrastructure reliability.
               </p>
             </div>
 
@@ -171,8 +171,8 @@ const Contact = () => {
                 Quick Response
               </h4>
               <p className="text-sm text-gray-700 dark:text-gray-300">
-                I typically respond to messages within 24 hours. For urgent matters, 
-                feel free to reach out through LinkedIn or GitHub.
+                Best-fit conversations: associate DevOps engineer, junior cloud engineer, DevSecOps trainee,
+                platform support, site reliability support, or infrastructure automation roles.
               </p>
             </motion.div>
           </motion.div>
@@ -260,7 +260,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 dark:border-dark-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-dark-800 text-gray-900 dark:text-white transition-colors"
-                    placeholder="What's this about?"
+                    placeholder="DevOps / cloud opportunity"
                   />
                 </div>
 
@@ -276,7 +276,7 @@ const Contact = () => {
                     required
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-dark-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-dark-800 text-gray-900 dark:text-white transition-colors resize-none"
-                    placeholder="Tell me about your project or just say hello!"
+                    placeholder="Tell me about the role, team, stack, or opportunity."
                   />
                 </div>
 

@@ -55,3 +55,7 @@ node_modules/
 .vercel
 .firebase
 firebase-debug.log
+
+# Raw/unoptimized 3D asset sources (large - keep local only, use the
+# optimized version committed under public/ instead)
+/asset-sources

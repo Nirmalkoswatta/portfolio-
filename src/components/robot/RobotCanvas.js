@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import CloudRobotModel from './CloudRobotModel';
+import GLBRobotModel from './GLBRobotModel';
 import Robot2DFallback from './Robot2DFallback';
 
 /**
@@ -32,7 +32,7 @@ const RobotCanvas = ({ motion, quality, onPointerEnter, onPointerLeave, onIntera
           <pointLight position={[0, 1.2, -3.2]} intensity={0.6} color="#bfe0fc" distance={8} />
         )}
 
-        <CloudRobotModel motion={motion} quality={quality} />
+        <GLBRobotModel motion={motion} quality={quality} />
       </Canvas>
     </Suspense>
   );

@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { Box3, Vector3 } from 'three';
 import gsap from 'gsap';
+import TeleportEffect from './TeleportEffect';
 
 // Optimized from the original Sketchfab source (37.5MB -> ~640KB): textures
 // resized/re-encoded to WebP, geometry welded/pruned. See asset-sources/ for
@@ -33,10 +34,11 @@ const damp = (current, target, lambda, delta) =>
 /**
  * Loads the real GLB robot asset and drives it with the same interaction
  * targets (`motion`, see useRobotInteraction) as the rest of the system:
- * idle breathing + cursor look + section bias + GSAP-driven jump motion,
- * plus a hover-triggered wave gesture and per-part glow highlight.
- * Centering/scale is computed from the model's actual bounding box so it
- * frames consistently regardless of the source asset's own pivot/units.
+ * idle breathing + cursor look + GSAP-driven teleport (dematerialize/
+ * relocate/rematerialize), plus a hover-triggered wave gesture and per-part
+ * glow highlight. Centering/scale is computed from the model's actual
+ * bounding box so it frames consistently regardless of the source asset's
+ * own pivot/units.
  */
 const GLBRobotModel = ({ motion, quality = 'high' }) => {
   const { scene, nodes, materials } = useGLTF(MODEL_URL);
@@ -66,6 +68,11 @@ const GLBRobotModel = ({ motion, quality = 'high' }) => {
     PART_KEYS.forEach((k) => {
       const mat = materials[`${k}.001`];
       base[k] = mat ? mat.emissiveIntensity ?? 0 : 0;
+      // Teleport needs to fade opacity, so materials must be transparent-capable.
+      if (mat) {
+        mat.transparent = true;
+        mat.needsUpdate = true;
+      }
     });
     return base;
   }, [materials]);
@@ -125,7 +132,7 @@ const GLBRobotModel = ({ motion, quality = 'high' }) => {
     if (!rootGroup.current || !modelGroup.current) return;
     const delta = Math.min(rawDelta, 1 / 30);
     const t = state.clock.elapsedTime;
-    const { pointerRef, sectionBiasRef, motionRef, reducedMotionRef } = motion;
+    const { pointerRef, motionRef, reducedMotionRef } = motion;
     const m = motionRef.current;
     const reduced = reducedMotionRef.current;
 
@@ -134,46 +141,40 @@ const GLBRobotModel = ({ motion, quality = 'high' }) => {
     const entranceEase = 1 - Math.pow(1 - entrance.current, 3);
     const entranceOvershoot = entrance.current < 1 ? Math.sin(entrance.current * Math.PI) * 0.035 : 0;
 
-    // Calm idle breathing.
+    // Calm idle breathing, scaled by the teleport dematerialize/rematerialize
+    // envelope (1 = fully here, 0 = mid-teleport/invisible).
     const breathe = reduced ? 0 : Math.sin(t * 1.05) * 0.03;
     rootGroup.current.position.y = breathe + (entranceEase - 1) * 0.5;
-    rootGroup.current.scale.setScalar(0.97 + entranceEase * 0.03 * (0.96 + m.squash * 0.04) + entranceOvershoot);
+    const idleScale = 0.97 + entranceEase * 0.03 * (0.96 + m.squash * 0.04) + entranceOvershoot;
+    rootGroup.current.scale.setScalar(idleScale * Math.max(0.001, m.teleport));
 
-    // Jump arc (screen-space travel handled by the DOM wrapper).
-    const arcHeight = reduced ? 0 : Math.sin(m.arc * Math.PI) * 0.32;
-    rootGroup.current.position.y += arcHeight;
-
-    // Cursor awareness + section bias + jump lean/spin, all on the whole
-    // model (no separate head bone available on this static mesh).
+    // Cursor awareness + jump lean, all on the whole model (no separate head
+    // bone available on this static mesh).
     const pointerTargetY = reduced ? 0 : clamp(pointerRef.current.x, -1, 1) * 0.22;
     const pointerTargetX = reduced ? 0 : clamp(-pointerRef.current.y, -1, 1) * 0.1;
-    const sectionBias = sectionBiasRef.current || { rotY: 0, rotX: 0 };
     const microGlance = reduced ? 0 : Math.sin(t * 0.17 + idleSeed.current) * 0.03;
     const idleSway = reduced ? 0 : Math.sin(t * 0.22 + idleSeed.current) * 0.025;
 
-    const targetY =
-      FRONT_FACING_CORRECTION +
-      clamp(pointerTargetY + sectionBias.rotY * 0.6 + microGlance + idleSway, -0.4, 0.4) +
-      m.leanX * 0.3 +
-      (reduced ? 0 : m.spin * 0.5);
-    const targetX = clamp(pointerTargetX + sectionBias.rotX * 0.5, -0.18, 0.18);
+    const targetY = FRONT_FACING_CORRECTION + clamp(pointerTargetY + microGlance + idleSway, -0.4, 0.4) + m.leanX * 0.3;
+    const targetX = clamp(pointerTargetX, -0.18, 0.18);
     const targetZ = m.leanX * 0.5 + (reduced ? 0 : waveAngle.current * 0.4);
 
     modelGroup.current.rotation.y = damp(modelGroup.current.rotation.y, targetY, 5, delta);
     modelGroup.current.rotation.x = damp(modelGroup.current.rotation.x, targetX, 5, delta);
     modelGroup.current.rotation.z = damp(modelGroup.current.rotation.z, targetZ, 6, delta);
 
-    // Per-part glow highlight when the pointer is directly over that section.
+    // Per-part glow highlight when the pointer is directly over that section,
+    // plus the teleport opacity fade (materials made transparent-capable above).
     PART_KEYS.forEach((k) => {
       const mat = materials[`${k}.001`];
       if (!mat) return;
       const target = hoverPart.current === k ? baseEmissive[k] + 0.7 : baseEmissive[k];
       mat.emissiveIntensity = damp(mat.emissiveIntensity, target, 8, delta);
+      mat.opacity = m.teleport;
     });
 
     if (groundGlow.current) {
-      groundGlow.current.material.opacity = (0.14 + Math.sin(t * 1.1) * 0.03 + m.eyeBoost * 0.08) * entranceEase;
-      groundGlow.current.scale.setScalar(1 + arcHeight * 0.6);
+      groundGlow.current.material.opacity = (0.14 + Math.sin(t * 1.1) * 0.03 + m.eyeBoost * 0.08) * entranceEase * m.teleport;
     }
   });
 
@@ -183,6 +184,8 @@ const GLBRobotModel = ({ motion, quality = 'high' }) => {
         <circleGeometry args={[0.7, 32]} />
         <meshBasicMaterial color="#3b82f6" transparent opacity={0.14} depthWrite={false} />
       </mesh>
+
+      <TeleportEffect teleportFxRef={motion.teleportFxRef} groundY={-1.3} />
 
       <group ref={modelGroup}>
         <group scale={scale} position={[offset[0] * scale, offset[1] * scale, offset[2] * scale]}>

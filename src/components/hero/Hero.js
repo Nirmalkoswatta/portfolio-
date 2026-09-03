@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin } from 'lucide-react';
 import TextReveal from './TextReveal';
 import StatusIndicator from './StatusIndicator';
+import RobotOverlay from '../robot/RobotOverlay';
 
 const Hero = ({ onOpenTerminal }) => {
   return (
@@ -10,13 +11,13 @@ const Hero = ({ onOpenTerminal }) => {
       id="home"
       className="relative min-h-[90vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      <div className="max-w-4xl mx-auto w-full">
-        {/* Typography, Narrative & CTAs */}
+      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        {/* Left Column: Typography, Narrative & CTAs */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-6 text-left relative z-10"
+          className="lg:col-span-7 space-y-6 text-left relative z-10"
         >
           {/* System Status Indicator */}
           <StatusIndicator onOpenTerminal={onOpenTerminal} />
@@ -99,6 +100,16 @@ const Hero = ({ onOpenTerminal }) => {
               </span>
             ))}
           </div>
+        </motion.div>
+
+        {/* Right Column: Interactive Robot Character */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          className="lg:col-span-5 w-full flex items-center justify-center"
+        >
+          <RobotOverlay className="w-full h-[340px] sm:h-[400px] lg:h-[460px]" />
         </motion.div>
       </div>
     </section>

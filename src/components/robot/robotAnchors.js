@@ -8,13 +8,14 @@ export const ANCHORS = {
 
 export const otherAnchor = (anchor) => (anchor === 'left' ? 'right' : 'left');
 
-// Box size (px) for the fixed wrapper per breakpoint. Chosen so the robot
-// reads as a real character on first viewport without covering copy/CTAs.
+// Box size (px) for the robot's wrapper per breakpoint. Sized to fit inside
+// the Hero's right column with room left over for the left/right teleport
+// travel, while still reading as a real character.
 export const getBoxSize = () => {
   const w = window.innerWidth;
-  if (w < 640) return 260; // mobile
-  if (w < 1024) return 380; // tablet
-  return 520; // desktop
+  if (w < 640) return 220; // mobile
+  if (w < 1024) return 300; // tablet
+  return 360; // desktop
 };
 
 export const isMobileViewport = () => window.innerWidth < 640;

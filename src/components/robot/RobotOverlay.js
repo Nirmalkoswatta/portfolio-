@@ -16,17 +16,18 @@ const supportsWebGL = () => {
 };
 
 /**
- * The one persistent robot instance for the whole site. Fixed-position,
- * bottom corner, small enough to never cover copy/CTAs/nav, jumps between
- * left/right on click/tap. Mounted once in App.js - never remounted per
- * section, so the character stays continuous across scroll.
+ * Hero-scoped robot character. Lives inside a `position: relative` box
+ * (sized via `className`) and jumps left/right - via a real teleport, not a
+ * slide - only within that box. Scrolls away with the rest of the Hero
+ * section like any other content; does not persist across the page.
  */
-const RobotOverlay = () => {
+const RobotOverlay = ({ className = '' }) => {
+  const containerRef = useRef(null);
   const wrapperRef = useRef(null);
   const [webglOk] = useState(() => supportsWebGL());
   const [mobile, setMobile] = useState(() => isMobileViewport());
 
-  const controller = useRobotInteraction(wrapperRef);
+  const controller = useRobotInteraction(wrapperRef, containerRef);
   const { applyAnchorInstant, triggerJump, handlePointerEnter, handlePointerLeave, anchorRef } = controller;
 
   useEffect(() => {
@@ -55,35 +56,37 @@ const RobotOverlay = () => {
   };
 
   return (
-    <div
-      ref={wrapperRef}
-      className="fixed bottom-2 sm:bottom-4 z-30 pointer-events-auto touch-none"
-      style={{ width: 240, height: 240 }}
-      role="button"
-      aria-label="Interactive robot mascot - click to see it move"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          triggerJump();
-        }
-      }}
-    >
-      {webglOk ? (
-        <RobotErrorBoundary fallback={<Robot2DFallback />}>
-          <RobotCanvas
-            motion={controller}
-            quality={mobile ? 'low' : 'high'}
-            onPointerEnter={handlePointerEnter}
-            onPointerLeave={handlePointerLeave}
-            onInteract={handleInteract}
-          />
-        </RobotErrorBoundary>
-      ) : (
-        <div onClick={handleInteract} className="w-full h-full">
-          <Robot2DFallback />
-        </div>
-      )}
+    <div ref={containerRef} className={`relative ${className}`}>
+      <div
+        ref={wrapperRef}
+        className="absolute top-1/2 -translate-y-1/2 z-10 pointer-events-auto touch-none"
+        style={{ width: 240, height: 240 }}
+        role="button"
+        aria-label="Interactive robot mascot - click to see it teleport"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerJump();
+          }
+        }}
+      >
+        {webglOk ? (
+          <RobotErrorBoundary fallback={<Robot2DFallback />}>
+            <RobotCanvas
+              motion={controller}
+              quality={mobile ? 'low' : 'high'}
+              onPointerEnter={handlePointerEnter}
+              onPointerLeave={handlePointerLeave}
+              onInteract={handleInteract}
+            />
+          </RobotErrorBoundary>
+        ) : (
+          <div onClick={handleInteract} className="w-full h-full">
+            <Robot2DFallback />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

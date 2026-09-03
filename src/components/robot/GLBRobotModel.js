@@ -3,7 +3,6 @@ import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { Box3, Vector3 } from 'three';
 import gsap from 'gsap';
-import SmokePuffs from './SmokePuffs';
 
 // Optimized from the original Sketchfab source (37.5MB -> ~640KB): textures
 // resized/re-encoded to WebP, geometry welded/pruned. See asset-sources/ for
@@ -13,7 +12,8 @@ const MODEL_URL = '/robot-optimized.glb';
 
 // The source asset's front points sideways relative to this scene's default
 // camera-facing (+Z) - rotate here if it ever looks off after a model swap.
-const FRONT_FACING_CORRECTION = Math.PI / 2;
+// (+90 previously overshot to the back; -90 brings it to front.)
+const FRONT_FACING_CORRECTION = -Math.PI / 2;
 
 // Per-mesh transforms as resolved by gltfjsx from the flattened scene graph -
 // reused here instead of `<primitive object={scene} />` so each part is a
@@ -183,8 +183,6 @@ const GLBRobotModel = ({ motion, quality = 'high' }) => {
         <circleGeometry args={[0.7, 32]} />
         <meshBasicMaterial color="#3b82f6" transparent opacity={0.14} depthWrite={false} />
       </mesh>
-
-      <SmokePuffs smokeRef={motion.smokeRef} quality={quality} originY={-1.28} />
 
       <group ref={modelGroup}>
         <group scale={scale} position={[offset[0] * scale, offset[1] * scale, offset[2] * scale]}>

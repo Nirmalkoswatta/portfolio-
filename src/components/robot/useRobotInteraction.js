@@ -46,9 +46,6 @@ export default function useRobotInteraction(wrapperRef) {
     spin: 0,
     eyeBoost: 0,
   });
-  // Fire-and-forget puff triggers for CloudRobotModel's smoke system - just a
-  // counter bump (+ which edge it happened at), no React state involved.
-  const smokeRef = useRef({ burstId: 0, edge: 'right' });
   const reducedMotionRef = useRef(false);
   const mobileRef = useRef(isMobileViewport());
   const timelineRef = useRef(null);
@@ -184,12 +181,11 @@ export default function useRobotInteraction(wrapperRef) {
       '>-0.02'
     );
     // 3. Jump: slide the DOM wrapper across the screen to the new anchor,
-    // synced with a bigger 3D arc/lean + a light in-flight spin and a smoke
-    // puff at takeoff, so it reads as one continuous, slowed-down hop.
+    // synced with a bigger 3D arc/lean + a light in-flight spin, so it reads
+    // as one continuous, slowed-down hop.
     tl.call(() => {
       stateRef.current = ROBOT_STATE.JUMPING;
       anchorRef.current = nextAnchor;
-      smokeRef.current = { burstId: smokeRef.current.burstId + 1, edge: anchorRef.current === 'left' ? 'right' : 'left' };
     });
     tl.to(
       el,
@@ -212,10 +208,9 @@ export default function useRobotInteraction(wrapperRef) {
       '<'
     );
     tl.to(motion, { arc: 0, spin: 0, duration: 0.01 }, '>');
-    // 4. Landing puff, then settle: overshoot + spring back 300-450ms
+    // 4. Settle: overshoot + spring back 300-450ms
     tl.call(() => {
       stateRef.current = ROBOT_STATE.SETTLING;
-      smokeRef.current = { burstId: smokeRef.current.burstId + 1, edge: nextAnchor };
     });
     tl.to(
       motion,
@@ -240,7 +235,6 @@ export default function useRobotInteraction(wrapperRef) {
     pointerRef,
     sectionBiasRef,
     motionRef,
-    smokeRef,
     reducedMotionRef,
     mobileRef,
     applyAnchorInstant,

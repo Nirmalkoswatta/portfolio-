@@ -1,25 +1,25 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { RoundedBox } from '@react-three/drei';
 
 // Orbiting cloud/infra satellite node - purely decorative, skipped on mobile.
-const OrbitingNode = ({ radius, speed, offset, size = 0.14, color = '#38bdf8', wireColor = '#60a5fa' }) => {
+const OrbitingNode = ({ radius, speed, offset, size = 0.13, color = '#38bdf8', wireColor = '#60a5fa' }) => {
   const nodeRef = useRef();
   useFrame((state) => {
     if (!nodeRef.current) return;
     const t = state.clock.elapsedTime * speed + offset;
-    nodeRef.current.position.set(Math.cos(t) * radius, Math.sin(t * 2) * 0.2, Math.sin(t) * radius);
-    nodeRef.current.rotation.x = t * 1.5;
-    nodeRef.current.rotation.y = t * 2;
+    nodeRef.current.position.set(Math.cos(t) * radius, Math.sin(t * 2) * 0.18, Math.sin(t) * radius);
+    nodeRef.current.rotation.x = t * 1.4;
+    nodeRef.current.rotation.y = t * 1.8;
   });
   return (
     <group ref={nodeRef}>
-      <mesh>
+      <RoundedBox args={[size, size, size]} radius={size * 0.28} smoothness={3}>
+        <meshPhysicalMaterial color={color} emissive={color} emissiveIntensity={0.7} roughness={0.15} metalness={0.85} clearcoat={0.6} />
+      </RoundedBox>
+      <mesh scale={1.3}>
         <boxGeometry args={[size, size, size]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.8} roughness={0.1} metalness={0.9} />
-      </mesh>
-      <mesh scale={1.35}>
-        <boxGeometry args={[size, size, size]} />
-        <meshBasicMaterial color={wireColor} wireframe transparent opacity={0.35} />
+        <meshBasicMaterial color={wireColor} wireframe transparent opacity={0.3} />
       </mesh>
     </group>
   );
@@ -33,8 +33,8 @@ const OrbitalRing = ({ radius, tilt = [0, 0, 0], speed = 0.5, color = '#38bdf8' 
   return (
     <group rotation={tilt}>
       <mesh ref={ringRef}>
-        <torusGeometry args={[radius, 0.01, 12, 56]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} transparent opacity={0.3} roughness={0.2} />
+        <torusGeometry args={[radius, 0.008, 12, 64]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.45} transparent opacity={0.28} roughness={0.2} />
       </mesh>
     </group>
   );
@@ -57,8 +57,14 @@ const CloudRobotModel = ({ motion, quality = 'high' }) => {
   const visorGlow = useRef();
   const eyeLeft = useRef();
   const eyeRight = useRef();
+  const eyeLeftCore = useRef();
+  const eyeRightCore = useRef();
   const thrusterGlow = useRef();
+  const groundGlow = useRef();
+  const leftArm = useRef();
+  const rightArm = useRef();
   const entrance = useRef(0);
+  const idleSeed = useRef(Math.random() * Math.PI * 2);
 
   const isHigh = quality === 'high';
 
@@ -70,18 +76,23 @@ const CloudRobotModel = ({ motion, quality = 'high' }) => {
     const m = motionRef.current;
     const reduced = reducedMotionRef.current;
 
-    // Entrance: gentle rise + fade-in scale on first ~0.9s.
+    // Entrance: gentle rise + fade-in scale on first ~0.9s, gentle overshoot settle.
     entrance.current = Math.min(1, entrance.current + delta / 0.9);
     const entranceEase = 1 - Math.pow(1 - entrance.current, 3);
+    const entranceOvershoot = entrance.current < 1 ? Math.sin(entrance.current * Math.PI) * 0.04 : 0;
 
     // Calm idle breathing - subtle, never cartoon bobbing.
-    const breathe = reduced ? 0 : Math.sin(t * 1.1) * 0.035;
-    rootGroup.current.position.y = breathe + (entranceEase - 1) * 0.4;
-    rootGroup.current.scale.setScalar(0.85 + entranceEase * 0.15 * (0.94 + m.squash * 0.06));
+    const breathe = reduced ? 0 : Math.sin(t * 1.1) * 0.032;
+    rootGroup.current.position.y = breathe + (entranceEase - 1) * 0.45;
+    const squashScale = 0.96 + entranceEase * 0.04 * (0.95 + m.squash * 0.05) + entranceOvershoot;
+    rootGroup.current.scale.setScalar(squashScale);
+
+    // Slow, near-imperceptible full-body sway for a "quietly alive" feel.
+    rootGroup.current.rotation.y = reduced ? 0 : Math.sin(t * 0.25 + idleSeed.current) * 0.035;
 
     // Jump arc (screen-space move is handled by the DOM wrapper; this adds
     // a small vertical hop + lean so the jump reads as physical motion).
-    const arcHeight = reduced ? 0 : Math.sin(m.arc * Math.PI) * 0.3;
+    const arcHeight = reduced ? 0 : Math.sin(m.arc * Math.PI) * 0.32;
     rootGroup.current.position.y += arcHeight;
 
     // Body lean during anticipation/jump/settle, owned by GSAP via motionRef.
@@ -93,7 +104,10 @@ const CloudRobotModel = ({ motion, quality = 'high' }) => {
     const pointerTargetX = reduced ? 0 : clamp(-pointerRef.current.y, -1, 1) * 0.18;
     const sectionBias = sectionBiasRef.current || { rotY: 0, rotX: 0 };
 
-    const targetHeadY = clamp(pointerTargetY + sectionBias.rotY, -0.5, 0.5) + m.leanX * 0.35;
+    // Occasional slow micro-glance drift layered under cursor tracking.
+    const microGlance = reduced ? 0 : Math.sin(t * 0.18 + idleSeed.current) * 0.05;
+
+    const targetHeadY = clamp(pointerTargetY + sectionBias.rotY + microGlance, -0.5, 0.5) + m.leanX * 0.35;
     const targetHeadX = clamp(pointerTargetX + sectionBias.rotX, -0.3, 0.3);
 
     headGroup.current.rotation.y = damp(headGroup.current.rotation.y, targetHeadY, 5, delta);
@@ -103,111 +117,188 @@ const CloudRobotModel = ({ motion, quality = 'high' }) => {
     const targetChassisY = sectionBias.rotY * 0.4;
     chassisGroup.current.rotation.y = damp(chassisGroup.current.rotation.y, targetChassisY, 3, delta);
 
+    // Arms sway gently opposite the body lean - reads as a natural counterbalance.
+    if (leftArm.current && rightArm.current) {
+      const armSwing = Math.sin(t * 1.1 + idleSeed.current) * 0.05 - m.leanX * 0.4;
+      leftArm.current.rotation.z = damp(leftArm.current.rotation.z, 0.08 + armSwing, 5, delta);
+      rightArm.current.rotation.z = damp(rightArm.current.rotation.z, -0.08 + armSwing, 5, delta);
+    }
+
     // Eye glow: idle pulse + interaction boost.
-    const idlePulse = 1.0 + Math.sin(t * 4) * 0.3;
-    const eyeIntensity = idlePulse + m.eyeBoost * 1.2;
+    const idlePulse = 1.0 + Math.sin(t * 3.4) * 0.25;
+    const eyeIntensity = idlePulse + m.eyeBoost * 1.4;
     if (eyeLeft.current) eyeLeft.current.material.emissiveIntensity = eyeIntensity;
     if (eyeRight.current) eyeRight.current.material.emissiveIntensity = eyeIntensity;
-    if (visorGlow.current) visorGlow.current.material.emissiveIntensity = 0.45 + Math.sin(t * 1.6) * 0.15 + m.eyeBoost * 0.3;
-    if (thrusterGlow.current) thrusterGlow.current.scale.setScalar(1 + Math.sin(t * 8) * 0.1 + m.eyeBoost * 0.15);
+    if (eyeLeftCore.current) eyeLeftCore.current.material.opacity = 0.7 + m.eyeBoost * 0.3;
+    if (eyeRightCore.current) eyeRightCore.current.material.opacity = 0.7 + m.eyeBoost * 0.3;
+    if (visorGlow.current) visorGlow.current.material.emissiveIntensity = 0.4 + Math.sin(t * 1.4) * 0.12 + m.eyeBoost * 0.35;
+    if (thrusterGlow.current) thrusterGlow.current.scale.setScalar(1 + Math.sin(t * 7) * 0.08 + m.eyeBoost * 0.15);
+    if (groundGlow.current) {
+      groundGlow.current.material.opacity = (0.16 + Math.sin(t * 1.1) * 0.03 + m.eyeBoost * 0.1) * entranceEase;
+      groundGlow.current.scale.setScalar(1 + arcHeight * 0.6);
+    }
   });
 
+  const seg = isHigh ? 32 : 18;
+
   return (
-    <group ref={rootGroup} scale={0.85} position={[0, -0.4, 0]}>
+    <group ref={rootGroup} scale={1.05} position={[0, -0.35, 0]}>
       {isHigh && (
         <>
-          <OrbitalRing radius={1.5} tilt={[Math.PI / 3, Math.PI / 6, 0]} speed={0.35} color="#38bdf8" />
-          <OrbitalRing radius={1.7} tilt={[-Math.PI / 4, Math.PI / 4, 0]} speed={-0.28} color="#818cf8" />
-          <OrbitingNode radius={1.5} speed={0.6} offset={0} size={0.14} color="#f59e0b" wireColor="#fbbf24" />
-          <OrbitingNode radius={1.7} speed={-0.5} offset={Math.PI / 2} size={0.13} color="#06b6d4" wireColor="#38bdf8" />
-          <OrbitingNode radius={1.6} speed={0.8} offset={Math.PI} size={0.12} color="#3b82f6" wireColor="#60a5fa" />
+          <OrbitalRing radius={1.55} tilt={[Math.PI / 3, Math.PI / 6, 0]} speed={0.3} color="#38bdf8" />
+          <OrbitalRing radius={1.75} tilt={[-Math.PI / 4, Math.PI / 4, 0]} speed={-0.24} color="#818cf8" />
+          <OrbitingNode radius={1.55} speed={0.55} offset={0} size={0.13} color="#f59e0b" wireColor="#fbbf24" />
+          <OrbitingNode radius={1.75} speed={-0.45} offset={Math.PI / 2} size={0.12} color="#06b6d4" wireColor="#38bdf8" />
+          <OrbitingNode radius={1.65} speed={0.7} offset={Math.PI} size={0.11} color="#3b82f6" wireColor="#60a5fa" />
         </>
       )}
 
+      {/* Soft grounding glow beneath the robot - subtle sense of weight/presence */}
+      <mesh ref={groundGlow} position={[0, -0.95, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.62, 32]} />
+        <meshBasicMaterial color="#38bdf8" transparent opacity={0.16} depthWrite={false} />
+      </mesh>
+
       <group ref={chassisGroup}>
-        {/* Head + cloud crown */}
-        <group ref={headGroup} position={[0, 0.48, 0]}>
+        {/* Head */}
+        <group ref={headGroup} position={[0, 0.56, 0]}>
           <mesh>
-            <sphereGeometry args={[0.5, isHigh ? 32 : 16, isHigh ? 32 : 16]} />
-            <meshStandardMaterial color="#0f172a" emissive="#0284c7" emissiveIntensity={0.22} roughness={0.15} metalness={0.85} />
+            <sphereGeometry args={[0.46, seg, seg]} />
+            <meshPhysicalMaterial
+              color="#0f172a"
+              emissive="#0284c7"
+              emissiveIntensity={0.2}
+              roughness={0.22}
+              metalness={0.75}
+              clearcoat={0.5}
+              clearcoatRoughness={0.25}
+            />
           </mesh>
 
-          <group position={[0, -0.3, 0.22]}>
-            <mesh>
-              <boxGeometry args={[0.6, 0.36, 0.4]} />
-              <meshStandardMaterial color="#020617" emissive="#0f172a" roughness={0.1} metalness={0.95} />
+          {/* Face plate - rounded so it reads as a friendly visor, not a shoebox */}
+          <group position={[0, -0.06, 0.24]}>
+            <RoundedBox args={[0.56, 0.34, 0.18]} radius={0.09} smoothness={4}>
+              <meshPhysicalMaterial color="#020617" emissive="#0f172a" roughness={0.15} metalness={0.9} clearcoat={0.4} />
+            </RoundedBox>
+            <mesh ref={visorGlow} position={[0, 0.01, 0.1]}>
+              <RoundedBox args={[0.46, 0.2, 0.02]} radius={0.06} smoothness={3}>
+                <meshStandardMaterial color="#0284c7" emissive="#0284c7" emissiveIntensity={0.5} roughness={0.05} metalness={0.85} />
+              </RoundedBox>
             </mesh>
-            <mesh ref={visorGlow} position={[0, 0.02, 0.21]}>
-              <boxGeometry args={[0.5, 0.22, 0.03]} />
-              <meshStandardMaterial color="#0284c7" emissive="#0284c7" emissiveIntensity={0.55} roughness={0.05} metalness={0.9} />
-            </mesh>
-            <mesh ref={eyeLeft} position={[-0.13, 0.02, 0.235]}>
-              <capsuleGeometry args={[0.038, 0.055, 6, 12]} />
-              <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.6} />
-            </mesh>
-            <mesh ref={eyeRight} position={[0.13, 0.02, 0.235]}>
-              <capsuleGeometry args={[0.038, 0.055, 6, 12]} />
-              <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.6} />
-            </mesh>
+
+            {/* Eyes: soft glowing lens with bright core - friendlier than hard capsules */}
+            <group position={[-0.13, 0.01, 0.13]}>
+              <mesh ref={eyeLeft}>
+                <sphereGeometry args={[0.052, seg, seg]} />
+                <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.5} />
+              </mesh>
+              <mesh ref={eyeLeftCore} position={[0, 0, 0.03]}>
+                <sphereGeometry args={[0.024, 12, 12]} />
+                <meshBasicMaterial color="#ffffff" transparent opacity={0.8} />
+              </mesh>
+            </group>
+            <group position={[0.13, 0.01, 0.13]}>
+              <mesh ref={eyeRight}>
+                <sphereGeometry args={[0.052, seg, seg]} />
+                <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.5} />
+              </mesh>
+              <mesh ref={eyeRightCore} position={[0, 0, 0.03]}>
+                <sphereGeometry args={[0.024, 12, 12]} />
+                <meshBasicMaterial color="#ffffff" transparent opacity={0.8} />
+              </mesh>
+            </group>
           </group>
 
-          <mesh position={[0, 0.28, 0]}>
-            <cylinderGeometry args={[0.014, 0.018, 0.16, 10]} />
-            <meshStandardMaterial color="#38bdf8" emissive="#0284c7" emissiveIntensity={0.8} />
-          </mesh>
-          <mesh position={[0, 0.36, 0]}>
-            <sphereGeometry args={[0.04, 12, 12]} />
-            <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.8} />
-          </mesh>
-        </group>
-
-        {/* Torso */}
-        <group position={[0, -0.26, 0]}>
-          <mesh>
-            <boxGeometry args={[0.64, 0.42, 0.44]} />
-            <meshStandardMaterial color="#0b0f19" emissive="#0284c7" emissiveIntensity={0.1} roughness={0.2} metalness={0.9} />
-          </mesh>
-          <mesh position={[0, 0.04, 0.23]}>
-            <circleGeometry args={[0.12, isHigh ? 28 : 16]} />
-            <meshStandardMaterial color="#38bdf8" emissive="#0284c7" emissiveIntensity={1.3} roughness={0.1} />
-          </mesh>
-          <mesh position={[0, 0.04, 0.235]}>
-            <ringGeometry args={[0.075, 0.11, isHigh ? 28 : 16]} />
-            <meshBasicMaterial color="#ffffff" transparent opacity={0.85} />
-          </mesh>
           {isHigh && (
             <>
-              <mesh position={[-0.17, 0.11, 0.23]}>
-                <sphereGeometry args={[0.02, 10, 10]} />
-                <meshStandardMaterial color="#22c55e" emissive="#22c55e" emissiveIntensity={1.8} />
+              <mesh position={[0, 0.34, 0]}>
+                <cylinderGeometry args={[0.012, 0.016, 0.14, 10]} />
+                <meshStandardMaterial color="#38bdf8" emissive="#0284c7" emissiveIntensity={0.7} />
               </mesh>
-              <mesh position={[-0.17, 0.04, 0.23]}>
-                <sphereGeometry args={[0.02, 10, 10]} />
-                <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.8} />
+              <mesh position={[0, 0.41, 0]}>
+                <sphereGeometry args={[0.036, 14, 14]} />
+                <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.6} />
               </mesh>
             </>
           )}
         </group>
 
-        {/* Arms */}
-        <mesh position={[-0.42, -0.42, 0]}>
-          <capsuleGeometry args={[0.05, 0.26, 6, 12]} />
-          <meshStandardMaterial color="#1e293b" roughness={0.2} metalness={0.8} />
-        </mesh>
-        <mesh position={[0.42, -0.42, 0]}>
-          <capsuleGeometry args={[0.05, 0.26, 6, 12]} />
-          <meshStandardMaterial color="#1e293b" roughness={0.2} metalness={0.8} />
+        {/* Neck - closes the visible gap between head and torso */}
+        <mesh position={[0, 0.3, 0]}>
+          <cylinderGeometry args={[0.1, 0.13, 0.16, seg]} />
+          <meshPhysicalMaterial color="#111827" roughness={0.3} metalness={0.8} clearcoat={0.3} />
         </mesh>
 
-        {/* Thruster */}
-        <group position={[0, -0.66, 0]}>
+        {/* Torso - rounded, more organic than a raw box */}
+        <group position={[0, -0.02, 0]}>
+          <RoundedBox args={[0.6, 0.62, 0.4]} radius={0.14} smoothness={4}>
+            <meshPhysicalMaterial
+              color="#0b0f19"
+              emissive="#0284c7"
+              emissiveIntensity={0.08}
+              roughness={0.28}
+              metalness={0.75}
+              clearcoat={0.45}
+              clearcoatRoughness={0.3}
+            />
+          </RoundedBox>
+          <mesh position={[0, 0.08, 0.21]}>
+            <circleGeometry args={[0.115, seg]} />
+            <meshStandardMaterial color="#38bdf8" emissive="#0284c7" emissiveIntensity={1.1} roughness={0.1} />
+          </mesh>
+          <mesh position={[0, 0.08, 0.215]}>
+            <ringGeometry args={[0.07, 0.105, seg]} />
+            <meshBasicMaterial color="#ffffff" transparent opacity={0.8} />
+          </mesh>
+          {isHigh && (
+            <>
+              <mesh position={[-0.16, 0.18, 0.21]}>
+                <sphereGeometry args={[0.018, 10, 10]} />
+                <meshStandardMaterial color="#22c55e" emissive="#22c55e" emissiveIntensity={1.6} />
+              </mesh>
+              <mesh position={[-0.16, 0.11, 0.21]}>
+                <sphereGeometry args={[0.018, 10, 10]} />
+                <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={1.6} />
+              </mesh>
+            </>
+          )}
+        </group>
+
+        {/* Arms - shoulder joint + capsule, pivoted so the swing looks natural */}
+        <group ref={leftArm} position={[-0.36, 0.2, 0]}>
+          <mesh position={[0, -0.02, 0]}>
+            <sphereGeometry args={[0.075, seg, seg]} />
+            <meshPhysicalMaterial color="#1e293b" roughness={0.25} metalness={0.8} clearcoat={0.3} />
+          </mesh>
+          <mesh position={[-0.03, -0.2, 0]} rotation={[0, 0, 0.06]}>
+            <capsuleGeometry args={[0.055, 0.28, 8, seg]} />
+            <meshPhysicalMaterial color="#1e293b" roughness={0.25} metalness={0.8} clearcoat={0.3} />
+          </mesh>
+        </group>
+        <group ref={rightArm} position={[0.36, 0.2, 0]}>
+          <mesh position={[0, -0.02, 0]}>
+            <sphereGeometry args={[0.075, seg, seg]} />
+            <meshPhysicalMaterial color="#1e293b" roughness={0.25} metalness={0.8} clearcoat={0.3} />
+          </mesh>
+          <mesh position={[0.03, -0.2, 0]} rotation={[0, 0, -0.06]}>
+            <capsuleGeometry args={[0.055, 0.28, 8, seg]} />
+            <meshPhysicalMaterial color="#1e293b" roughness={0.25} metalness={0.8} clearcoat={0.3} />
+          </mesh>
+        </group>
+
+        {/* Lower body taper + thruster */}
+        <mesh position={[0, -0.42, 0]}>
+          <cylinderGeometry args={[0.24, 0.16, 0.22, seg]} />
+          <meshPhysicalMaterial color="#0d1220" roughness={0.3} metalness={0.75} clearcoat={0.3} />
+        </mesh>
+        <group position={[0, -0.62, 0]}>
           <mesh>
-            <cylinderGeometry args={[0.15, 0.075, 0.1, isHigh ? 24 : 12]} />
+            <cylinderGeometry args={[0.15, 0.075, 0.1, seg]} />
             <meshStandardMaterial color="#0f172a" roughness={0.2} metalness={0.9} />
           </mesh>
           <mesh ref={thrusterGlow} position={[0, -0.08, 0]}>
-            <coneGeometry args={[0.13, 0.24, isHigh ? 24 : 12]} rotation={[Math.PI, 0, 0]} />
-            <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={2.2} transparent opacity={0.75} />
+            <coneGeometry args={[0.12, 0.22, seg]} rotation={[Math.PI, 0, 0]} />
+            <meshStandardMaterial color="#38bdf8" emissive="#38bdf8" emissiveIntensity={2} transparent opacity={0.7} />
           </mesh>
         </group>
       </group>
@@ -215,7 +306,7 @@ const CloudRobotModel = ({ motion, quality = 'high' }) => {
       {/* Invisible, slightly-larger interaction collider so touch targets
           are forgiving without affecting visible geometry. */}
       <mesh visible={false} onPointerDown={(e) => e.stopPropagation()}>
-        <sphereGeometry args={[1.1, 8, 8]} />
+        <sphereGeometry args={[1.15, 8, 8]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
     </group>

@@ -104,15 +104,26 @@ export default function useRobotInteraction(wrapperRef) {
     };
   }, [wrapperRef]);
 
-  // Places the wrapper at the current anchor without animation (initial mount).
+  // Distance (px) the wrapper must translate to cross from the right-side
+  // anchor to the left-side one. Base CSS position never changes - only
+  // `transform: translateX()` moves the box, so the jump can be animated as
+  // a real slide across the screen instead of an instant left/right swap.
+  const travelDistance = () => {
+    const box = getBoxSize();
+    const margin = 16; // matches the 1rem CSS margin on both sides
+    return Math.max(0, window.innerWidth - box - margin * 2);
+  };
+
+  // Places the wrapper at the current anchor without animation (initial mount / resize).
   const applyAnchorInstant = useCallback((anchor) => {
     const el = wrapperRef.current;
     if (!el) return;
     const box = getBoxSize();
     el.style.width = `${box}px`;
     el.style.height = `${box}px`;
-    el.style.left = anchor === 'left' ? '1rem' : 'auto';
-    el.style.right = anchor === 'right' ? '1rem' : 'auto';
+    el.style.right = '1rem';
+    el.style.left = 'auto';
+    gsap.set(el, { x: anchor === 'left' ? -travelDistance() : 0 });
   }, [wrapperRef]);
 
   const canInteract = () =>
@@ -163,19 +174,28 @@ export default function useRobotInteraction(wrapperRef) {
       },
       '>-0.02'
     );
-    // 3. Jump: move DOM wrapper to the new anchor + arc/lean 350-600ms
+    // 3. Jump: slide the DOM wrapper across the screen to the new anchor,
+    // synced with a 3D arc/lean so it reads as one continuous hop, not a
+    // teleport-then-wiggle.
     tl.call(() => {
       stateRef.current = ROBOT_STATE.JUMPING;
       anchorRef.current = nextAnchor;
-      el.style.left = nextAnchor === 'left' ? '1rem' : 'auto';
-      el.style.right = nextAnchor === 'right' ? '1rem' : 'auto';
     });
+    tl.to(
+      el,
+      {
+        x: nextAnchor === 'left' ? -travelDistance() : 0,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      },
+      '<'
+    );
     tl.to(
       motion,
       {
         arc: 1,
         leanX: nextAnchor === 'right' ? 0.22 : -0.22,
-        duration: 0.42,
+        duration: 0.5,
         ease: 'power1.inOut',
       },
       '<'

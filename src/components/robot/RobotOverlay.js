@@ -57,8 +57,8 @@ const RobotOverlay = () => {
   return (
     <div
       ref={wrapperRef}
-      className="fixed bottom-4 sm:bottom-6 z-30 pointer-events-auto touch-none"
-      style={{ width: 200, height: 200 }}
+      className="fixed bottom-2 sm:bottom-4 z-30 pointer-events-auto touch-none"
+      style={{ width: 240, height: 240 }}
       role="button"
       aria-label="Interactive robot mascot - click to see it move"
       tabIndex={0}

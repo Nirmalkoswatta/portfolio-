@@ -22,12 +22,17 @@ const RobotCanvas = ({ motion, quality, onPointerEnter, onPointerLeave, onIntera
         onPointerLeave={onPointerLeave}
         onPointerDown={onInteract}
       >
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[6, 8, 6]} intensity={1.6} color="#ffffff" />
-        <directionalLight position={[-6, -3, -4]} intensity={0.5} color="#38bdf8" />
-        <pointLight position={[0, 3, 3]} intensity={1.1} color="#38bdf8" distance={9} />
+        <ambientLight intensity={0.9} />
+        <directionalLight position={[5, 7, 5]} intensity={1.7} color="#ffffff" />
+        <directionalLight position={[-5, 2, -6]} intensity={0.9} color="#38bdf8" />
+        <pointLight position={[0, 2.5, 3]} intensity={1} color="#38bdf8" distance={9} />
         {quality === 'high' && (
-          <pointLight position={[-3, 1, 2]} intensity={0.6} color="#818cf8" distance={7} />
+          <>
+            <pointLight position={[-3, 1, 2]} intensity={0.5} color="#818cf8" distance={7} />
+            {/* Rim light from behind - separates the robot from the page and
+                catches the clearcoat highlight on the shoulders/head. */}
+            <pointLight position={[0, 1.5, -3.5]} intensity={1.1} color="#7dd3fc" distance={8} />
+          </>
         )}
 
         <CloudRobotModel motion={motion} quality={quality} />

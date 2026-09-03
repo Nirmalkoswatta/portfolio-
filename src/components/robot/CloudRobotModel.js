@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
+import { AdditiveBlending, DoubleSide } from 'three';
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 const damp = (current, target, lambda, delta) =>
@@ -17,18 +18,32 @@ const Shell = (props) => <meshPhysicalMaterial {...shellProps} {...props} />;
 const Accent = (props) => <meshPhysicalMaterial {...accentProps} {...props} />;
 const Dark = (props) => <meshPhysicalMaterial {...darkProps} {...props} />;
 
-// Small puff-of-smoke burst fired at jump takeoff/landing. A fixed pool of
-// plain spheres (cheap: meshBasicMaterial, no lighting cost) reused across
-// bursts - nothing is created/destroyed per frame, only repositioned/faded.
-const SMOKE_COUNT_HIGH = 7;
-const SMOKE_COUNT_LOW = 4;
+// Puff-of-smoke burst fired at jump takeoff/landing. A fixed pool of plain
+// spheres (cheap: meshBasicMaterial, no lighting cost) reused across bursts -
+// nothing is created/destroyed per frame, only repositioned/faded. Additive
+// blending + a bright core color makes it read clearly against both light
+// and dark page backgrounds instead of blending into them.
+const SMOKE_COUNT_HIGH = 10;
+const SMOKE_COUNT_LOW = 6;
 
 const SmokePuffs = ({ smokeRef, quality }) => {
   const count = quality === 'high' ? SMOKE_COUNT_HIGH : SMOKE_COUNT_LOW;
   const meshRefs = useRef(Array.from({ length: count }, () => React.createRef()));
   const particles = useRef(
-    Array.from({ length: count }, () => ({ age: 999, lifetime: 0.7, vx: 0, vy: 0, vz: 0, x: 0, y: 0, z: 0 }))
+    Array.from({ length: count }, () => ({
+      age: 999,
+      lifetime: 0.7,
+      vx: 0,
+      vy: 0,
+      vz: 0,
+      x: 0,
+      y: 0,
+      z: 0,
+      baseScale: 1,
+    }))
   );
+  const ringRef = useRef();
+  const ringState = useRef({ age: 999, lifetime: 0.45 });
   const lastBurstId = useRef(smokeRef.current.burstId);
 
   useFrame((state, rawDelta) => {
@@ -37,17 +52,23 @@ const SmokePuffs = ({ smokeRef, quality }) => {
 
     if (burst.burstId !== lastBurstId.current) {
       lastBurstId.current = burst.burstId;
-      const originX = burst.edge === 'left' ? 0.22 : -0.22; // puff kicks off from the trailing side
+      const originX = burst.edge === 'left' ? 0.24 : -0.24; // puff kicks off from the trailing side
       particles.current.forEach((p) => {
         p.age = 0;
-        p.lifetime = 0.55 + Math.random() * 0.35;
-        p.x = originX + (Math.random() - 0.5) * 0.15;
-        p.y = -0.78 + Math.random() * 0.08;
-        p.z = (Math.random() - 0.5) * 0.15;
-        p.vx = (Math.random() - 0.5) * 0.35 - originX * 0.4;
-        p.vy = 0.25 + Math.random() * 0.25;
-        p.vz = (Math.random() - 0.5) * 0.35;
+        p.lifetime = 0.6 + Math.random() * 0.4;
+        p.x = originX + (Math.random() - 0.5) * 0.2;
+        p.y = -0.8 + Math.random() * 0.1;
+        p.z = (Math.random() - 0.5) * 0.2;
+        p.vx = (Math.random() - 0.5) * 0.5 - originX * 0.6;
+        p.vy = 0.35 + Math.random() * 0.35;
+        p.vz = (Math.random() - 0.5) * 0.5;
+        p.baseScale = 0.75 + Math.random() * 0.6;
       });
+      ringState.current.age = 0;
+      if (ringRef.current) {
+        ringRef.current.position.set(originX, -0.85, 0);
+        ringRef.current.visible = true;
+      }
     }
 
     particles.current.forEach((p, i) => {
@@ -64,20 +85,50 @@ const SmokePuffs = ({ smokeRef, quality }) => {
       const progress = p.age / p.lifetime;
       mesh.visible = true;
       mesh.position.set(p.x, p.y, p.z);
-      const scale = 0.09 * (1 + progress * 1.6);
+      const scale = p.baseScale * 0.22 * (1 + progress * 2.4);
       mesh.scale.setScalar(scale);
-      mesh.material.opacity = (1 - progress) * 0.4;
+      mesh.material.opacity = (1 - progress) * 0.75;
     });
+
+    // Quick expanding ring - a punchy landing/takeoff flash for extra "wow".
+    if (ringRef.current) {
+      const rs = ringState.current;
+      if (rs.age < rs.lifetime) {
+        rs.age += delta;
+        const rp = rs.age / rs.lifetime;
+        ringRef.current.scale.setScalar(0.3 + rp * 1.6);
+        ringRef.current.material.opacity = (1 - rp) * 0.6;
+      } else {
+        ringRef.current.visible = false;
+      }
+    }
   });
 
   return (
     <group>
       {meshRefs.current.map((ref, i) => (
         <mesh ref={ref} key={i} visible={false}>
-          <sphereGeometry args={[1, 8, 8]} />
-          <meshBasicMaterial color="#dbeafe" transparent opacity={0} depthWrite={false} />
+          <sphereGeometry args={[1, 10, 10]} />
+          <meshBasicMaterial
+            color="#bfe4ff"
+            transparent
+            opacity={0}
+            depthWrite={false}
+            blending={AdditiveBlending}
+          />
         </mesh>
       ))}
+      <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]} visible={false}>
+        <ringGeometry args={[0.22, 0.3, 32]} />
+        <meshBasicMaterial
+          color="#7dd3fc"
+          transparent
+          opacity={0}
+          depthWrite={false}
+          side={DoubleSide}
+          blending={AdditiveBlending}
+        />
+      </mesh>
     </group>
   );
 };

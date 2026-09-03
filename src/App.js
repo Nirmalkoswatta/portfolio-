@@ -8,6 +8,7 @@ import GridBackground from './components/effects/GridBackground';
 import BootSequence from './components/effects/BootSequence';
 import TerminalEasterEgg from './components/effects/TerminalEasterEgg';
 import CursorFollower from './components/motion/CursorFollower';
+import RobotOverlay from './components/robot/RobotOverlay';
 
 // Sections
 import Hero from './components/hero/Hero';
@@ -127,6 +128,9 @@ function App() {
         isOpen={isTerminalOpen}
         onClose={() => setIsTerminalOpen(false)}
       />
+
+      {/* Persistent Interactive Robot Character */}
+      <RobotOverlay />
     </div>
   );
 }

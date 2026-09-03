@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin } from 'lucide-react';
-import RobotScene from '../three/RobotScene';
 import TextReveal from './TextReveal';
 import StatusIndicator from './StatusIndicator';
 
@@ -11,13 +10,13 @@ const Hero = ({ onOpenTerminal }) => {
       id="home"
       className="relative min-h-[90vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-        {/* Left Column: Typography, Narrative & CTAs */}
+      <div className="max-w-4xl mx-auto w-full">
+        {/* Typography, Narrative & CTAs */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-7 space-y-6 text-left relative z-10"
+          className="space-y-6 text-left relative z-10"
         >
           {/* System Status Indicator */}
           <StatusIndicator onOpenTerminal={onOpenTerminal} />
@@ -99,30 +98,6 @@ const Hero = ({ onOpenTerminal }) => {
                 {tech}
               </span>
             ))}
-          </div>
-        </motion.div>
-
-        {/* Right Column: Signature 3D CloudOps Robot */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="lg:col-span-5 h-[380px] sm:h-[440px] lg:h-[500px] w-full flex items-center justify-center relative rounded-3xl bg-slate-100/60 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-800/60 shadow-xl overflow-hidden"
-        >
-          {/* Technical corner marks */}
-          <div className="absolute top-3 left-4 font-mono text-[10px] text-slate-500 uppercase tracking-wider z-20">
-            [SYS::CLOUDOPS-ROBOT-01]
-          </div>
-          <div className="absolute top-3 right-4 font-mono text-[10px] text-emerald-500 uppercase tracking-wider flex items-center gap-1.5 z-20">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            TELEMETRY ONLINE
-          </div>
-
-          <RobotScene />
-
-          <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[10px] text-slate-500 z-20">
-            <span>CONTAINER: DOCKER/K8S</span>
-            <span>PROVIDER: AWS / CLOUD</span>
           </div>
         </motion.div>
       </div>

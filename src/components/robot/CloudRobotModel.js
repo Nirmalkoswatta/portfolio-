@@ -17,6 +17,71 @@ const Shell = (props) => <meshPhysicalMaterial {...shellProps} {...props} />;
 const Accent = (props) => <meshPhysicalMaterial {...accentProps} {...props} />;
 const Dark = (props) => <meshPhysicalMaterial {...darkProps} {...props} />;
 
+// Small puff-of-smoke burst fired at jump takeoff/landing. A fixed pool of
+// plain spheres (cheap: meshBasicMaterial, no lighting cost) reused across
+// bursts - nothing is created/destroyed per frame, only repositioned/faded.
+const SMOKE_COUNT_HIGH = 7;
+const SMOKE_COUNT_LOW = 4;
+
+const SmokePuffs = ({ smokeRef, quality }) => {
+  const count = quality === 'high' ? SMOKE_COUNT_HIGH : SMOKE_COUNT_LOW;
+  const meshRefs = useRef(Array.from({ length: count }, () => React.createRef()));
+  const particles = useRef(
+    Array.from({ length: count }, () => ({ age: 999, lifetime: 0.7, vx: 0, vy: 0, vz: 0, x: 0, y: 0, z: 0 }))
+  );
+  const lastBurstId = useRef(smokeRef.current.burstId);
+
+  useFrame((state, rawDelta) => {
+    const delta = Math.min(rawDelta, 1 / 30);
+    const burst = smokeRef.current;
+
+    if (burst.burstId !== lastBurstId.current) {
+      lastBurstId.current = burst.burstId;
+      const originX = burst.edge === 'left' ? 0.22 : -0.22; // puff kicks off from the trailing side
+      particles.current.forEach((p) => {
+        p.age = 0;
+        p.lifetime = 0.55 + Math.random() * 0.35;
+        p.x = originX + (Math.random() - 0.5) * 0.15;
+        p.y = -0.78 + Math.random() * 0.08;
+        p.z = (Math.random() - 0.5) * 0.15;
+        p.vx = (Math.random() - 0.5) * 0.35 - originX * 0.4;
+        p.vy = 0.25 + Math.random() * 0.25;
+        p.vz = (Math.random() - 0.5) * 0.35;
+      });
+    }
+
+    particles.current.forEach((p, i) => {
+      const mesh = meshRefs.current[i]?.current;
+      if (!mesh) return;
+      if (p.age >= p.lifetime) {
+        mesh.visible = false;
+        return;
+      }
+      p.age += delta;
+      p.x += p.vx * delta;
+      p.y += p.vy * delta;
+      p.z += p.vz * delta;
+      const progress = p.age / p.lifetime;
+      mesh.visible = true;
+      mesh.position.set(p.x, p.y, p.z);
+      const scale = 0.09 * (1 + progress * 1.6);
+      mesh.scale.setScalar(scale);
+      mesh.material.opacity = (1 - progress) * 0.4;
+    });
+  });
+
+  return (
+    <group>
+      {meshRefs.current.map((ref, i) => (
+        <mesh ref={ref} key={i} visible={false}>
+          <sphereGeometry args={[1, 8, 8]} />
+          <meshBasicMaterial color="#dbeafe" transparent opacity={0} depthWrite={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
 // One articulated arm: shoulder ball -> thin connector -> elbow -> forearm -> hand.
 const Arm = React.forwardRef(({ side = 1, seg }, ref) => (
   <group ref={ref} position={[side * 0.4, 0.14, 0]}>
@@ -94,7 +159,10 @@ const CloudRobotModel = ({ motion, quality = 'high' }) => {
     const breathe = reduced ? 0 : Math.sin(t * 1.05) * 0.03;
     rootGroup.current.position.y = breathe + (entranceEase - 1) * 0.45;
     rootGroup.current.scale.setScalar(0.98 + entranceEase * 0.02 * (0.96 + m.squash * 0.04) + entranceOvershoot);
-    rootGroup.current.rotation.y = reduced ? 0 : Math.sin(t * 0.22 + idleSeed.current) * 0.03;
+    // Idle sway, plus a light in-flight spin while jumping (GSAP-owned `spin`
+    // target: -1..1) for a touch of playfulness during the hop.
+    const idleSway = reduced ? 0 : Math.sin(t * 0.22 + idleSeed.current) * 0.03;
+    rootGroup.current.rotation.y = idleSway + (reduced ? 0 : m.spin * 0.5);
 
     // Jump arc (screen-space travel handled by the DOM wrapper).
     const arcHeight = reduced ? 0 : Math.sin(m.arc * Math.PI) * 0.3;
@@ -161,6 +229,9 @@ const CloudRobotModel = ({ motion, quality = 'high' }) => {
         <circleGeometry args={[0.6, 32]} />
         <meshBasicMaterial color="#3b82f6" transparent opacity={0.14} depthWrite={false} />
       </mesh>
+
+      {/* Takeoff/landing smoke puffs */}
+      <SmokePuffs smokeRef={motion.smokeRef} quality={quality} />
 
       <group ref={chassisGroup}>
         {/* ===== HEAD ===== */}

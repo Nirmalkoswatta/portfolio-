@@ -43,8 +43,12 @@ export default function useRobotInteraction(wrapperRef) {
     leanX: 0,
     leanZ: 0,
     arc: 0,
+    spin: 0,
     eyeBoost: 0,
   });
+  // Fire-and-forget puff triggers for CloudRobotModel's smoke system - just a
+  // counter bump (+ which edge it happened at), no React state involved.
+  const smokeRef = useRef({ burstId: 0, edge: 'right' });
   const reducedMotionRef = useRef(false);
   const mobileRef = useRef(isMobileViewport());
   const timelineRef = useRef(null);
@@ -145,6 +149,11 @@ export default function useRobotInteraction(wrapperRef) {
       return;
     }
 
+    // Jump duration was tuned up from the original 0.5s - the DOM slide and
+    // the 3D arc/lean both use this so the "teleport" never outruns the
+    // travel animation, and the whole hop reads as slower and more deliberate.
+    const JUMP_DURATION = 0.85;
+
     timelineRef.current?.kill();
     const tl = gsap.timeline({
       onStart: () => {
@@ -162,30 +171,31 @@ export default function useRobotInteraction(wrapperRef) {
     timelineRef.current = tl;
 
     // 1. Acknowledge (compress + eye flash) 100-180ms
-    tl.to(motion, { squash: 0.9, eyeBoost: 1, duration: 0.14, ease: 'power2.out' });
-    // 2. Anticipation (lean away from jump direction) 100-160ms
+    tl.to(motion, { squash: 0.9, eyeBoost: 1, duration: 0.16, ease: 'power2.out' });
+    // 2. Anticipation (lean away from jump direction, crouch) 140-200ms
     tl.to(
       motion,
       {
-        leanX: nextAnchor === 'right' ? -0.18 : 0.18,
-        squash: 1.08,
-        duration: 0.14,
+        leanX: nextAnchor === 'right' ? -0.2 : 0.2,
+        squash: 1.1,
+        duration: 0.18,
         ease: 'power2.out',
       },
       '>-0.02'
     );
     // 3. Jump: slide the DOM wrapper across the screen to the new anchor,
-    // synced with a 3D arc/lean so it reads as one continuous hop, not a
-    // teleport-then-wiggle.
+    // synced with a bigger 3D arc/lean + a light in-flight spin and a smoke
+    // puff at takeoff, so it reads as one continuous, slowed-down hop.
     tl.call(() => {
       stateRef.current = ROBOT_STATE.JUMPING;
       anchorRef.current = nextAnchor;
+      smokeRef.current = { burstId: smokeRef.current.burstId + 1, edge: anchorRef.current === 'left' ? 'right' : 'left' };
     });
     tl.to(
       el,
       {
         x: nextAnchor === 'left' ? -travelDistance() : 0,
-        duration: 0.5,
+        duration: JUMP_DURATION,
         ease: 'power2.inOut',
       },
       '<'
@@ -194,21 +204,23 @@ export default function useRobotInteraction(wrapperRef) {
       motion,
       {
         arc: 1,
-        leanX: nextAnchor === 'right' ? 0.22 : -0.22,
-        duration: 0.5,
+        spin: nextAnchor === 'right' ? 1 : -1,
+        leanX: nextAnchor === 'right' ? 0.24 : -0.24,
+        duration: JUMP_DURATION,
         ease: 'power1.inOut',
       },
       '<'
     );
-    tl.to(motion, { arc: 0, duration: 0.01 }, '>');
-    // 4. Settle: overshoot + spring back 250-450ms
+    tl.to(motion, { arc: 0, spin: 0, duration: 0.01 }, '>');
+    // 4. Landing puff, then settle: overshoot + spring back 300-450ms
     tl.call(() => {
       stateRef.current = ROBOT_STATE.SETTLING;
+      smokeRef.current = { burstId: smokeRef.current.burstId + 1, edge: nextAnchor };
     });
     tl.to(
       motion,
-      { leanX: 0, squash: 1, eyeBoost: 0, duration: 0.4, ease: 'elastic.out(1, 0.55)' },
-      '>-0.05'
+      { leanX: 0, squash: 1, eyeBoost: 0, duration: 0.45, ease: 'elastic.out(1, 0.6)' },
+      '>-0.06'
     );
 
     return tl;
@@ -228,6 +240,7 @@ export default function useRobotInteraction(wrapperRef) {
     pointerRef,
     sectionBiasRef,
     motionRef,
+    smokeRef,
     reducedMotionRef,
     mobileRef,
     applyAnchorInstant,

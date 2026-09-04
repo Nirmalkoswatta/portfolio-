@@ -22,7 +22,13 @@ import Contact from './components/sections/Contact';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
-  const [isBootComplete, setIsBootComplete] = useState(false);
+  const [isBootComplete, setIsBootComplete] = useState(() => {
+    try {
+      return sessionStorage.getItem('boot-complete') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
 
   // Initialize theme from localStorage or default dark
@@ -88,9 +94,26 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-slate-100 selection:bg-blue-500/20 selection:text-blue-500 relative transition-colors duration-300">
-      {/* Short Boot Sequence (~800ms) */}
+      {/* Skip link for keyboard users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[300] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-blue-600 focus:text-white focus:font-mono focus:text-xs focus:font-semibold"
+      >
+        Skip to content
+      </a>
+
+      {/* Short Boot Sequence (plays once per browser session) */}
       {!isBootComplete && (
-        <BootSequence onComplete={() => setIsBootComplete(true)} />
+        <BootSequence
+          onComplete={() => {
+            setIsBootComplete(true);
+            try {
+              sessionStorage.setItem('boot-complete', 'true');
+            } catch {
+              // sessionStorage unavailable (private mode) — replay is harmless
+            }
+          }}
+        />
       )}
 
       {/* Canvas Grid & Ambient Glow */}
@@ -107,7 +130,7 @@ function App() {
       />
 
       {/* Main Experience Flow */}
-      <main className="relative z-10 space-y-12">
+      <main id="main-content" className="relative z-10 space-y-12">
         <Hero onOpenTerminal={() => setIsTerminalOpen(true)} />
         <About />
         <Skills />

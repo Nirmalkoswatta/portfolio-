@@ -133,8 +133,9 @@ const Contact = () => {
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Your Name</label>
+                    <label htmlFor="user_name" className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Your Name</label>
                     <input
+                      id="user_name"
                       type="text"
                       name="user_name"
                       value={formData.user_name}
@@ -146,8 +147,9 @@ const Contact = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Your Email</label>
+                    <label htmlFor="user_email" className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Your Email</label>
                     <input
+                      id="user_email"
                       type="email"
                       name="user_email"
                       value={formData.user_email}
@@ -160,8 +162,9 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Subject / Role</label>
+                  <label htmlFor="subject" className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Subject / Role</label>
                   <input
+                    id="subject"
                     type="text"
                     name="subject"
                     value={formData.subject}
@@ -173,8 +176,9 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Message Payload</label>
+                  <label htmlFor="message" className="font-mono text-[11px] text-slate-600 dark:text-slate-400 uppercase">Message Payload</label>
                   <textarea
+                    id="message"
                     name="message"
                     rows={4}
                     value={formData.message}

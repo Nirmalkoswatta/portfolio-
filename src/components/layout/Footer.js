@@ -81,7 +81,7 @@ const Footer = ({ onOpenTerminal }) => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-slate-500 font-mono text-[10px]">
           <span>© {currentYear} Nirmal Koswatta. All rights reserved.</span>
           <div className="flex items-center gap-3">
-            <span>ENGINEERED WITH REACT &amp; THREE.JS</span>
+            <span>ENGINEERED WITH REACT</span>
             <span>•</span>
             <span>DEPLOYED ON VERCEL</span>
           </div>

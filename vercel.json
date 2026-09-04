@@ -31,10 +31,6 @@
       "dest": "/$1"
     },
     {
-      "src": "/(.*\\.(glb|gltf))",
-      "dest": "/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
@@ -59,19 +55,6 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600"
-        }
-      ]
-    },
-    {
-      "source": "/(.*\\.glb)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "model/gltf-binary"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
         }
       ]
     }

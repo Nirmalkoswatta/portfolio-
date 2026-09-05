@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin } from 'lucide-react';
 import TextReveal from './TextReveal';
 import StatusIndicator from './StatusIndicator';
+import RobotMascot from '../effects/RobotMascot';
 
 const Hero = ({ onOpenTerminal }) => {
   return (
@@ -10,13 +11,13 @@ const Hero = ({ onOpenTerminal }) => {
       id="home"
       className="relative min-h-[90vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      <div className="max-w-4xl mx-auto w-full flex items-center justify-center">
+      <div className="max-w-6xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-10">
         {/* Typography, Narrative & CTAs */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-6 text-left relative z-10"
+          className="space-y-6 text-left relative z-10 flex-1"
         >
           {/* System Status Indicator */}
           <StatusIndicator onOpenTerminal={onOpenTerminal} />
@@ -99,6 +100,16 @@ const Hero = ({ onOpenTerminal }) => {
               </span>
             ))}
           </div>
+        </motion.div>
+
+        {/* Robot Mascot — right column */}
+        <motion.div
+          initial={{ opacity: 0, x: 40, scale: 0.85 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="hidden lg:flex flex-col items-center justify-center flex-shrink-0"
+        >
+          <RobotMascot />
         </motion.div>
       </div>
     </section>

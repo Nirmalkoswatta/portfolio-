@@ -11,7 +11,7 @@ const Timeline = () => {
 
   const timelineItems = [
     {
-      year: '2024 - Present',
+      year: '2025 - Present',
       title: 'Junior DevOps Engineer',
       subtitle: 'Zuse Technologies',
       url: 'https://zuse.lk/',

@@ -42,16 +42,17 @@ const Timeline = () => {
       ]
     },
     {
-      year: '2023 - Present',
-      title: 'Computer Science Undergraduate',
-      subtitle: 'SLIIT CityUNI',
-      description: 'Pursuing Software Engineering degree with focus on DevOps practices, cloud architecture, and modern full-stack development.',
+      year: '2023 - 2026',
+      title: 'BSc (Hons) Computer Science',
+      subtitle: 'University of Bedfordshire',
+      description: 'Completed BSc (Hons) Computer Science with 2nd Upper Class Honours (2:1), specializing in DevOps, cloud infrastructure, and secure software delivery.',
       icon: GraduationCap,
-      status: 'current',
+      status: 'completed',
       achievements: [
+        'Graduated with 2nd Upper Class Honours (2:1)',
         'Specializing in DevOps automation, Cloud Security, and Infrastructure Engineering',
-        'Working on real-world web applications and cloud deployment pipelines',
-        'Mastering modern DevOps tooling, CI/CD, and system monitoring'
+        'Built cloud-ready full-stack and AI-assisted systems',
+        'Final year projects focused on DevOps, security, and cloud-native architectures'
       ]
     },
     {

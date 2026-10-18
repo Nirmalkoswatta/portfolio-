@@ -9,11 +9,10 @@ const About = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
-
   const personalInfo = [
     { icon: Calendar, label: 'Birthday', value: '27 Jan 2003' },
     { icon: MapPin, label: 'Location', value: 'Sri Lanka' },
-    { icon: GraduationCap, label: 'Education', value: 'BSc (Hons) Computer Science (UoB)' },
+    { icon: GraduationCap, label: 'Education', value: 'BSc (Hons) CS — 2nd Upper Class (2:1)' },
     { icon: Code, label: 'Field', value: 'DevOps & DevSecOps Engineering' },
   ];
 
@@ -88,7 +87,7 @@ const About = () => {
             
             <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
               <p>
-                I am a Junior DevOps Engineer at <a href="https://zuse.lk/" target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 font-semibold hover:underline">Zuse Technologies</a>, currently pursuing my Computer Science degree at SLIIT CityUNI. 
+                I am a Junior DevOps Engineer at <a href="https://zuse.lk/" target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 font-semibold hover:underline">Zuse Technologies</a>, a computer science graduate (BSc Hons, 2nd Upper Class) from the University of Bedfordshire.
                 My focus lies at the intersection of modern software development, automated infrastructure, and proactive monitoring.
               </p>
               

@@ -50,7 +50,6 @@ const Timeline = () => {
       status: 'completed',
       achievements: [
         'Graduated with 2nd Upper Class Honours (2:1)',
-        'Specializing in DevOps automation, Cloud Security, and Infrastructure Engineering',
         'Built cloud-ready full-stack and AI-assisted systems',
         'Final year projects focused on DevOps, security, and cloud-native architectures'
       ]
